@@ -1,7 +1,7 @@
 # Личный проект «YetiCave»
 
 * Студент: [Николай Клеймёнов](https://up.htmlacademy.ru/php/6/user/593051).
-* Наставник: Олег Головахин.
+* Наставник: [Олег Головахин](https://htmlacademy.ru/profile/id849005)
 
 ---
 
