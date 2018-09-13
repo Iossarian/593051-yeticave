@@ -27,6 +27,7 @@ $user_avatar = 'img/user.jpg';
         <a class="main-header__add-lot button" href="add-lot.html">Добавить лот</a>
 
         <nav class="user-menu">
+        	
 
         <!-- здесь должен быть PHP код для показа аватара пользователя -->
 
