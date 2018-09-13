@@ -37,8 +37,7 @@ $user_avatar = 'img/user.jpg';
   				<div class="user-menu__logged">
     				<p>' . $user_name . '</p>
   				</div>';
-			}
-			else {
+			} else {
 				echo
 				'<ul class="user-menu__list">
     				<li class="user-menu__item">
