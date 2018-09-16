@@ -7,13 +7,13 @@ $goods_array = [
     "Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"
 ];
 $goods_list = [
-    $staff_1 = [
+    [
     'name' => '2014 Rossignol District Snowboard',
     'category' => $goods_array[0],
     'price' => 10999,
     'source' => 'img/lot-1.jpg'
     ],
-    $staff_2 = [
+    [
     'name' => 'DC Ply Mens 2016/2017 Snowboard',
     'category' => $goods_array[0],
     'price' => 159999,
@@ -25,26 +25,25 @@ $goods_list = [
     'price' => 8000,
     'source' => 'img/lot-3.jpg'
     ],
-    $staff_4 = [
+    [
     'name' => 'Ботинки для сноуборда DC Mutiny Charocal',
     'category' => $goods_array[2],
     'price' => 	10999,
     'source' => 'img/lot-4.jpg'
     ],
-    $staff_5 = [
+    [
     'name' => 'Куртка для сноуборда DC Mutiny Charocal',
     'category' => $goods_array[3],
     'price' => 7500,
     'source' => 'img/lot-5.jpg'
     ],
-    $staff_6 = [
+    [
     'name' => 'Маска Oakley Canopy',
     'category' => $goods_array[5],
     'price' => 5400,
     'source' => 'img/lot-6.jpg'
     ]
 ];
-// $goods_list =[$staff_1, $staff_2, $staff_3, $staff_4, $staff_5, $staff_6];
 ?>
 <!DOCTYPE html>
 <html lang="ru">
