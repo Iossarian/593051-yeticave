@@ -47,10 +47,10 @@ $goods_list = [
 
 function formatThePrice ($price) {
     if ($price < 1000 ) {
-        return $price . ' ' . '₽';
+        return ceil($price) . ' ₽';
     } else {
         $format_price = ceil($price);
-        return number_format($format_price, 0, '.', ' ') . ' ' . '₽';
+        return number_format($format_price, 0, '.', ' ') . ' ₽';
     }
 }
 ?>
