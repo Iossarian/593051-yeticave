@@ -45,6 +45,7 @@ $goods_list = [
     ]
 ];
 
+
 function formatThePrice ($price) {
     if ($price < 1000 ) {
         return ceil($price) . ' ₽';
@@ -53,6 +54,7 @@ function formatThePrice ($price) {
         return number_format($format_price, 0, '.', ' ') . ' ₽';
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
