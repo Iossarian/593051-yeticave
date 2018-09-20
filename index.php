@@ -55,4 +55,16 @@ function formatThePrice ($price) {
     }
 }
 require_once ('functions.php');
+
+$page_content = include_template('index.php', [
+    'goods_array' => $goods_array,
+    'goods_list' => $goods_list
+]);
+$layout_content = include_template ('layout.php', [
+    'content' => $page_content,
+    'goods_array' => $goods_array,
+    'is_auth' => $is_auth,
+    'title' => 'Yeticave - Главная страница'
+]);
+echo $layout_content;
 ?>
