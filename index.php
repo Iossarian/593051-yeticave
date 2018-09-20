@@ -46,14 +46,6 @@ $goods_list = [
     ]
 ];
 
-function formatThePrice ($price) {
-    if ($price < 1000 ) {
-        return ceil($price) . ' ₽';
-    } else {
-        $format_price = ceil($price);
-        return number_format($format_price, 0, '.', ' ') . ' ₽';
-    }
-}
 require_once ('functions.php');
 
 $page_content = include_template('index.php', [
