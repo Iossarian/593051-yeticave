@@ -1,6 +1,6 @@
 <?php
+date_default_timezone_set("Europe/Moscow");
 $is_auth = rand(0, 1);
-
 
 $user_name = ''; // укажите здесь ваше имя
 $user_avatar = 'img/user.jpg';

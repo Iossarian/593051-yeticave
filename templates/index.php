@@ -29,7 +29,7 @@
                         <img src="<?= htmlspecialchars($value['source']); ?>" width="350" height="260" alt="">
                     </div>
                     <div class="lot__info">
-                        <span class="lot__category"><?= $value['category'] ?></span>
+                        <span class="lot__category"><?= htmlspecialchars($value['category']) ?></span>
                         <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?= htmlspecialchars($value['name']); ?></a>
                         </h3>
                         <div class="lot__state">
@@ -38,6 +38,7 @@
                                 <span class="lot__cost"><?= htmlspecialchars(formatThePrice($value['price'])); ?></span>
                             </div>
                             <div class="lot__timer timer">
+                                <?= print($format_time);?>
                             </div>
                         </div>
                     </div>
