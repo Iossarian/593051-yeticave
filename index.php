@@ -2,6 +2,9 @@
 date_default_timezone_set("Europe/Moscow");
 $is_auth = rand(0, 1);
 
+$lot_end = strtotime("22.09.2018 00:00");
+$time_left = $lot_end - time();
+$format_time = gmdate("H:i", $time_left);
 $user_name = ''; // укажите здесь ваше имя
 $user_avatar = 'img/user.jpg';
 $goods_array = [
@@ -60,4 +63,5 @@ $layout_content = include_template ('layout.php', [
     'title' => 'Yeticave - Главная страница'
 ]);
 echo $layout_content;
+
 ?>

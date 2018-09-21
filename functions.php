@@ -25,11 +25,4 @@ function formatThePrice ($price) {
         return number_format($format_price, 0, '.', ' ') . ' ₽';
     }
 }
-
-$lot_end = strtotime("22.09.2018 00:00");
-$time_left = $lot_end - time();
-$format_time = gmdate("H:i", $time_left);
-
-
-
 ?>
