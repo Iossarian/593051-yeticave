@@ -50,6 +50,7 @@ require_once ('functions.php');
 
 $page_content = include_template('index.php', [
     'goods_array' => $goods_array,
+    'format_time' => $format_time,
     'goods_list' => $goods_list
 ]);
 $layout_content = include_template ('layout.php', [
