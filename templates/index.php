@@ -38,7 +38,9 @@
                                 <span class="lot__cost"><?= htmlspecialchars(formatThePrice($value['price'])); ?></span>
                             </div>
                             <div class="lot__timer timer">
+
                                 <?= $format_time; ?>
+
                             </div>
                         </div>
                     </div>

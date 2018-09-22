@@ -1,6 +1,10 @@
 <?php
 date_default_timezone_set("Europe/Moscow");
 $is_auth = rand(0, 1);
+$lot_end = strtotime("21.09.2018");
+$time_left = $lot_end - time();
+$format_time = date("H:i", $time_left);
+
 
 $lot_end = strtotime("22.09.2018 00:00");
 $time_left = $lot_end - time();

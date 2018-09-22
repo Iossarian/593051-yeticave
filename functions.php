@@ -25,4 +25,5 @@ function formatThePrice ($price) {
         return number_format($format_price, 0, '.', ' ') . ' ₽';
     }
 }
+
 ?>
