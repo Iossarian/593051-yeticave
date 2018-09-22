@@ -26,10 +26,4 @@ function formatThePrice ($price) {
     }
 }
 
-$lot_end = strtotime("21.09.2018");
-$time_left = $lot_end - time();
-$format_time = date("H:i", $time_left);
-
-
-
 ?>

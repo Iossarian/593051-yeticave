@@ -1,6 +1,10 @@
 <?php
 date_default_timezone_set("Europe/Moscow");
 $is_auth = rand(0, 1);
+$lot_end = strtotime("21.09.2018");
+$time_left = $lot_end - time();
+$format_time = date("H:i", $time_left);
+
 
 $user_name = ''; // укажите здесь ваше имя
 $user_avatar = 'img/user.jpg';
@@ -50,6 +54,7 @@ require_once ('functions.php');
 
 $page_content = include_template('index.php', [
     'goods_array' => $goods_array,
+    'format_time' => $format_time,
     'goods_list' => $goods_list
 ]);
 $layout_content = include_template ('layout.php', [
