@@ -2,6 +2,14 @@ CREATE DATABASE yeticave
 DEFAULT CHARACTER SET utf8
 DEFAULT COLLATE utf8_general_ci;
 USE yeticave;
+-- База данных: `yeticave`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `bet`
+--
 
 CREATE TABLE `bet` (
   `id` int(11) NOT NULL,
@@ -45,7 +53,7 @@ CREATE TABLE `lots` (
   `create_date` datetime DEFAULT NULL,
   `name` char(128) DEFAULT NULL,
   `description` char(255) DEFAULT NULL,
-  `image` blob,
+  `image` char(120) DEFAULT NULL,
   `start_price` int(11) DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
   `bet_step` int(11) DEFAULT NULL,
@@ -66,7 +74,7 @@ CREATE TABLE `users` (
   `email` char(128) DEFAULT NULL,
   `name` char(64) DEFAULT NULL,
   `password` char(64) DEFAULT NULL,
-  `profile_img` blob,
+  `profile_img` char(120) DEFAULT NULL,
   `contacts` char(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -79,7 +87,8 @@ CREATE TABLE `users` (
 --
 ALTER TABLE `bet`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `user_id` (`user_id`);
+  ADD UNIQUE KEY `user_id` (`user_id`),
+  ADD KEY `lot_key` (`lot_id`);
 
 --
 -- Индексы таблицы `category`
@@ -97,7 +106,9 @@ ALTER TABLE `lots`
   ADD KEY `lot` (`name`),
   ADD KEY `lot_create` (`create_date`),
   ADD KEY `lot_end` (`end_time`),
-  ADD KEY `winner_id` (`winner_id`);
+  ADD KEY `winner_id` (`winner_id`),
+  ADD KEY `author_id_2` (`author_id`),
+  ADD KEY `category_id` (`category_id`);
 
 --
 -- Индексы таблицы `users`
@@ -135,4 +146,23 @@ ALTER TABLE `lots`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `bet`
+--
+ALTER TABLE `bet`
+  ADD CONSTRAINT `lot_key` FOREIGN KEY (`lot_id`) REFERENCES `lots` (`id`),
+  ADD CONSTRAINT `user_key` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `lots`
+--
+ALTER TABLE `lots`
+  ADD CONSTRAINT `author_key` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
+  ADD CONSTRAINT `winner_key` FOREIGN KEY (`winner_id`) REFERENCES `users` (`id`);
 COMMIT;
