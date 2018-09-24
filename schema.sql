@@ -6,7 +6,9 @@ USE yeticave;
 CREATE TABLE `bet` (
   `id` int(11) NOT NULL,
   `date` datetime DEFAULT NULL,
-  `price` int(11) DEFAULT NULL
+  `price` int(11) DEFAULT NULL,
+  `lot_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -46,7 +48,10 @@ CREATE TABLE `lots` (
   `image` blob,
   `start_price` int(11) DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
-  `bet_step` int(11) DEFAULT NULL
+  `bet_step` int(11) DEFAULT NULL,
+  `author_id` int(11) NOT NULL,
+  `winner_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -73,7 +78,8 @@ CREATE TABLE `users` (
 -- Индексы таблицы `bet`
 --
 ALTER TABLE `bet`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_id` (`user_id`);
 
 --
 -- Индексы таблицы `category`
@@ -87,9 +93,11 @@ ALTER TABLE `category`
 --
 ALTER TABLE `lots`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `author_id` (`author_id`),
   ADD KEY `lot` (`name`),
   ADD KEY `lot_create` (`create_date`),
-  ADD KEY `lot_end` (`end_time`);
+  ADD KEY `lot_end` (`end_time`),
+  ADD KEY `winner_id` (`winner_id`);
 
 --
 -- Индексы таблицы `users`
