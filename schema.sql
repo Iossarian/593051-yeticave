@@ -87,28 +87,20 @@ CREATE TABLE `users` (
 --
 ALTER TABLE `bet`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `user_id` (`user_id`),
-  ADD KEY `lot_key` (`lot_id`);
+  ADD UNIQUE KEY `user_id` (`user_id`);
 
 --
 -- Индексы таблицы `category`
 --
 ALTER TABLE `category`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `category_name` (`category_name`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `lots`
 --
 ALTER TABLE `lots`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `author_id` (`author_id`),
-  ADD KEY `lot` (`name`),
-  ADD KEY `lot_create` (`create_date`),
-  ADD KEY `lot_end` (`end_time`),
-  ADD KEY `winner_id` (`winner_id`),
-  ADD KEY `author_id_2` (`author_id`),
-  ADD KEY `category_id` (`category_id`);
+  ADD UNIQUE KEY `author_id` (`author_id`);
 
 --
 -- Индексы таблицы `users`
@@ -116,8 +108,7 @@ ALTER TABLE `lots`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `contact` (`contacts`),
-  ADD KEY `user_name` (`name`);
+  ADD UNIQUE KEY `contact` (`contacts`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
