@@ -34,18 +34,16 @@ INSERT INTO `bet` (`id`, `date`, `price`, `lot_id`, `user_id`) VALUES
 SELECT * FROM category;
 
 -- Получение данных из таблицы 'lots'
-SELECT name, start_price, image, category_id FROM lots
--- Получение текущей стоимости лота 
-SELECT MAX(price) 
-FROM bet 
-WHERE lot_id = 15 
-GROUP BY lot_id
--- Получение количества ставок для лота
-SELECT COUNT(id) 
-FROM bet 
-WHERE lot_id = 15 
-GROUP BY lot_id
-WHERE end_time > NOW();
+SELECT l.name, l.start_price, l.image, c.category_name, MAX(b.price), COUNT(b.id)
+FROM 
+lots l 
+LEFT JOIN 
+category c ON c.id = l.category_id 
+LEFT JOIN 
+bet b ON b.lot_id = l.id 
+WHERE l.end_time > NOW() 
+GROUP BY 
+l.id DESC;
 
 -- Показ лота по его Id и получение названия категории
 SELECT l.id, l.name, c.category_name AS category_name FROM lots AS l 
