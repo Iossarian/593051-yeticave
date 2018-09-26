@@ -27,21 +27,30 @@ INSERT INTO `lots` (`id`, `create_date`, `name`, `description`, `image`, `start_
 -- Заполнение таблицы "bet"
 INSERT INTO `bet` (`id`, `date`, `price`, `lot_id`, `user_id`) VALUES
 (1, NULL, 8300, 15, 1),
-(2, NULL, 8000, 17, 5);
+(2, NULL, 8000, 17, 5)
+(3, NULL, 8500, 15, 5);
 
 -- Получение категорий
-SELECT category_name FROM category;
+SELECT * FROM category;
 
--- Получение данные из таблицы 'lots'
+-- Получение данных из таблицы 'lots'
 SELECT name, start_price, image, category_id FROM lots
-SELECT price FROM bet WHERE lot_id = 15 ORDER BY price DESC
+-- Получение текущей стоимости лота 
+SELECT MAX(price) 
+FROM bet 
+WHERE lot_id = 15 
+GROUP BY lot_id
+-- Получение количества ставок для лота
+SELECT COUNT(id) 
+FROM bet 
+WHERE lot_id = 15 
+GROUP BY lot_id
 WHERE end_time > NOW();
 
--- Показ лота по его Id и получение названия
-SELECT * FROM lots
-WHERE id = 15;
-SELECT name FROM lots
-WHERE id = 15;
+-- Показ лота по его Id и получение названия категории
+SELECT l.id, l.name, c.category_name AS category_name FROM lots AS l 
+JOIN category AS c ON l.category_id = c.id 
+WHERE l.id = 15;
 
 -- Обновление названия лота по его id
 UPDATE lots SET name = '2015 Rossignol District Snowboard'
