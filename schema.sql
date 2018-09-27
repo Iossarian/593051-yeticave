@@ -30,17 +30,6 @@ CREATE TABLE `category` (
   `category_name` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Дамп данных таблицы `category`
---
-
-INSERT INTO `category` (`id`, `category_name`) VALUES
-(3, 'Ботинки'),
-(1, 'Доски и лыжи'),
-(5, 'Инструменты'),
-(2, 'Крепления'),
-(4, 'Одежда'),
-(6, 'Разное');
 
 -- --------------------------------------------------------
 
@@ -58,7 +47,7 @@ CREATE TABLE `lots` (
   `end_time` datetime DEFAULT NULL,
   `bet_step` int(11) DEFAULT NULL,
   `author_id` int(11) NOT NULL,
-  `winner_id` int(11) NOT NULL,
+  `winner_id` int(11) NULL,
   `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -86,8 +75,7 @@ CREATE TABLE `users` (
 -- Индексы таблицы `bet`
 --
 ALTER TABLE `bet`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `user_id` (`user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `category`
@@ -99,8 +87,7 @@ ALTER TABLE `category`
 -- Индексы таблицы `lots`
 --
 ALTER TABLE `lots`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `author_id` (`author_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `users`
@@ -156,4 +143,3 @@ ALTER TABLE `lots`
   ADD CONSTRAINT `author_key` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
   ADD CONSTRAINT `winner_key` FOREIGN KEY (`winner_id`) REFERENCES `users` (`id`);
-COMMIT;
