@@ -52,9 +52,10 @@
     <nav class="nav">
         <ul class="nav__list container">
             <!--заполните этот список из массива категорий-->
-            <?php foreach ($goods_array as $key => $value) { ?>
+            <?php foreach ($category_array as $value) { ?>
                 <li class="nav__item">
-                    <a href="pages/all-lots.html"> <?=$value ?> </a>
+                    <a href="pages/all-lots.html"> <?= $value[category_name]; ?> </a>
+
                 </li>
                 <?php
             }
