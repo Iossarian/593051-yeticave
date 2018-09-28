@@ -16,8 +16,9 @@ $sql_result = mysqli_query($con, $sql);
 $category_array = mysqli_fetch_all($sql_result, MYSQLI_ASSOC);
 
 //Подключение лотов
-$sql_lots = "SELECT id, name, image, start_price, end_time, category_id FROM lots"
-            . "JOIN category ON category.id = lots.category_id";
+$sql_lots = "SELECT lots.id, name, image, start_price, end_time, category_name FROM lots
+            JOIN category ON category.id = lots.category_id
+            ORDER BY create_date DESC";
 $sql_lots_result = mysqli_query($con, $sql_lots);
 $lots_array = mysqli_fetch_all($sql_lots_result, MYSQLI_ASSOC);
 
@@ -33,48 +34,6 @@ $format_time = gmdate("H:i", $time_left);
 $user_name = ''; // укажите здесь ваше имя
 $user_avatar = 'img/user.jpg';
 //массив с категориями
-$goods_array = [
-    "Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"
-];
-//массив с лотами
-$goods_list = [
-    [
-    'name' => '2014 Rossignol District Snowboard',
-    'category' => $goods_array[0],
-    'price' => 10999,
-    'source' => 'img/lot-1.jpg'
-    ],
-    [
-    'name' => 'DC Ply Mens 2016/2017 Snowboard',
-    'category' => $goods_array[0],
-    'price' => 159999,
-    'source' => 'img/lot-2.jpg'
-    ],
-    $staff_3 = [
-    'name' => 'Крепления Union Contact Pro 2015 года размер L/XL',
-    'category' => $goods_array[1],
-    'price' => 8000,
-    'source' => 'img/lot-3.jpg'
-    ],
-    [
-    'name' => 'Ботинки для сноуборда DC Mutiny Charocal',
-    'category' => $goods_array[2],
-    'price' => 	10999,
-    'source' => 'img/lot-4.jpg'
-    ],
-    [
-    'name' => 'Куртка для сноуборда DC Mutiny Charocal',
-    'category' => $goods_array[3],
-    'price' => 7500,
-    'source' => 'img/lot-5.jpg'
-    ],
-    [
-    'name' => 'Маска Oakley Canopy',
-    'category' => $goods_array[5],
-    'price' => 5400,
-    'source' => 'img/lot-6.jpg'
-    ]
-];
 
 require_once ('functions.php');
 
