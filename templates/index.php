@@ -39,8 +39,10 @@
                             </div>
                             <div class="lot__timer timer">
 
-                                <!?= $format_time; ?>
-                                <?= $value[end_time];?>
+                                <?= //$lot_end = strtotime($value[end_time]);
+                                    $time_left = $value[end_time] - time();
+                                    $format_time = gmdate("H:i", $time_left); ?>
+                                <?= $format_time;?>
 
                             </div>
                         </div>
