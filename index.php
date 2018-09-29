@@ -24,19 +24,22 @@ $lots_array = mysqli_fetch_all($sql_lots_result, MYSQLI_ASSOC);
 
 $is_auth = rand(0, 1);
 //таймер
-//$lot_end = strtotime("22.09.2018 00:00");
-//$time_left = $lot_end - time();
-//$format_time = gmdate("H:i", $time_left);
+//foreach ($lots_array as $value) {
+    //$lot_end = strtotime($value['end_time']);
+    //$time_left = $lot_end - time();
+    //$format_time = gmdate("H:i", $time_left);
+//}
 
 $user_name = ''; // укажите здесь ваше имя
 $user_avatar = 'img/user.jpg';
-//массив с категориями
+
 
 require_once ('functions.php');
 
 $page_content = include_template('index.php', [
     'goods_array' => $goods_array,
     'format_time' => $format_time,
+    'value[\'end_time\']' => $value['end_time'],
     'category_array' => $category_array,
     'lots_array' => $lots_array,
     'goods_list' => $goods_list
