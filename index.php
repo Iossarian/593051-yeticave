@@ -7,8 +7,7 @@ mysqli_set_charset($con, "utf8");
 //проверка подключения
 if ($con == false) {
     print ("Ошибка подключения: " . mysqli_connect_error());
-} else {
-    print ("Соединение с БД успешно установлено");
+    die();
 }
 //Подключение категорий
 $sql = "SELECT id, category_name FROM category";
