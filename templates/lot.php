@@ -2,69 +2,190 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title> <?= $title; ?> </title>
+    <title>DC Ply Mens 2016/2017 Snowboard</title>
     <link href="css/normalize.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
+
 <div class="page-wrapper">
 
     <header class="main-header">
         <div class="main-header__container container">
             <h1 class="visually-hidden">YetiCave</h1>
-            <a class="main-header__logo">
+            <a class="main-header__logo" href="index.html">
                 <img src="img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
             </a>
             <form class="main-header__search" method="get" action="https://echo.htmlacademy.ru">
                 <input type="search" name="search" placeholder="Поиск лота">
                 <input class="main-header__search-btn" type="submit" name="find" value="Найти">
             </form>
-            <a class="main-header__add-lot button" href="pages/add-lot.html">Добавить лот</a>
-
+            <a class="main-header__add-lot button" href="add-lot.html">Добавить лот</a>
             <nav class="user-menu">
-
-                <?php if ($is_auth): ?>
-                    <div class="user-menu__image">
-                        <img src="img/user.jpg" width="40" height="40" alt="Пользователь">
-                    </div>
-                    <div class="user-menu__logged">
-                        <p></p>
-                    </div>
-                <?php else: ?>
-                    <ul class="user-menu__list">
-                        <li class="user-menu__item">
-                            <a href="#">Регистрация</a>
-                        </li>
-                        <li class="user-menu__item">
-                            <a href="#">Вход</a>
-                        </li>
-                    </ul>
-                <?php endif; ?>
-
+                <ul class="user-menu__list">
+                    <li class="user-menu__item">
+                        <a href="sign-up.html">Регистрация</a>
+                    </li>
+                    <li class="user-menu__item">
+                        <a href="login.html">Вход</a>
+                    </li>
+                </ul>
             </nav>
         </div>
     </header>
 
-    <main class="container"><?= $content; ?></main>
+    <main>
+        <nav class="nav">
+            <ul class="nav__list container">
+                <li class="nav__item">
+                    <a href="all-lots.html">Доски и лыжи</a>
+                </li>
+                <li class="nav__item">
+                    <a href="all-lots.html">Крепления</a>
+                </li>
+                <li class="nav__item">
+                    <a href="all-lots.html">Ботинки</a>
+                </li>
+                <li class="nav__item">
+                    <a href="all-lots.html">Одежда</a>
+                </li>
+                <li class="nav__item">
+                    <a href="all-lots.html">Инструменты</a>
+                </li>
+                <li class="nav__item">
+                    <a href="all-lots.html">Разное</a>
+                </li>
+            </ul>
+        </nav>
+        <section class="lot-item container">
+            <h2>DC Ply Mens 2016/2017 Snowboard</h2>
+            <div class="lot-item__content">
+                <div class="lot-item__left">
+                    <div class="lot-item__image">
+                        <img src="img/lot-image.jpg" width="730" height="548" alt="Сноуборд">
+                    </div>
+                    <p class="lot-item__category">Категория: <span>Доски и лыжи</span></p>
+                    <p class="lot-item__description">Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив
+                        снег
+                        мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот
+                        снаряд
+                        отличной гибкостью и отзывчивостью, а симметричная геометрия в сочетании с классическим прогибом
+                        кэмбер
+                        позволит уверенно держать высокие скорости. А если к концу катального дня сил совсем не останется,
+                        просто
+                        посмотрите на Вашу доску и улыбнитесь, крутая графика от Шона Кливера еще никого не оставляла
+                        равнодушным.</p>
+                </div>
+                <div class="lot-item__right">
+                    <div class="lot-item__state">
+                        <div class="lot-item__timer timer">
+                            10:54:12
+                        </div>
+                        <div class="lot-item__cost-state">
+                            <div class="lot-item__rate">
+                                <span class="lot-item__amount">Текущая цена</span>
+                                <span class="lot-item__cost">10 999</span>
+                            </div>
+                            <div class="lot-item__min-cost">
+                                Мин. ставка <span>12 000 р</span>
+                            </div>
+                        </div>
+                        <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
+                            <p class="lot-item__form-item">
+                                <label for="cost">Ваша ставка</label>
+                                <input id="cost" type="number" name="cost" placeholder="12 000">
+                            </p>
+                            <button type="submit" class="button">Сделать ставку</button>
+                        </form>
+                    </div>
+                    <div class="history">
+                        <h3>История ставок (<span>10</span>)</h3>
+                        <table class="history__list">
+                            <tr class="history__item">
+                                <td class="history__name">Иван</td>
+                                <td class="history__price">10 999 р</td>
+                                <td class="history__time">5 минут назад</td>
+                            </tr>
+                            <tr class="history__item">
+                                <td class="history__name">Константин</td>
+                                <td class="history__price">10 999 р</td>
+                                <td class="history__time">20 минут назад</td>
+                            </tr>
+                            <tr class="history__item">
+                                <td class="history__name">Евгений</td>
+                                <td class="history__price">10 999 р</td>
+                                <td class="history__time">Час назад</td>
+                            </tr>
+                            <tr class="history__item">
+                                <td class="history__name">Игорь</td>
+                                <td class="history__price">10 999 р</td>
+                                <td class="history__time">19.03.17 в 08:21</td>
+                            </tr>
+                            <tr class="history__item">
+                                <td class="history__name">Енакентий</td>
+                                <td class="history__price">10 999 р</td>
+                                <td class="history__time">19.03.17 в 13:20</td>
+                            </tr>
+                            <tr class="history__item">
+                                <td class="history__name">Семён</td>
+                                <td class="history__price">10 999 р</td>
+                                <td class="history__time">19.03.17 в 12:20</td>
+                            </tr>
+                            <tr class="history__item">
+                                <td class="history__name">Илья</td>
+                                <td class="history__price">10 999 р</td>
+                                <td class="history__time">19.03.17 в 10:20</td>
+                            </tr>
+                            <tr class="history__item">
+                                <td class="history__name">Енакентий</td>
+                                <td class="history__price">10 999 р</td>
+                                <td class="history__time">19.03.17 в 13:20</td>
+                            </tr>
+                            <tr class="history__item">
+                                <td class="history__name">Семён</td>
+                                <td class="history__price">10 999 р</td>
+                                <td class="history__time">19.03.17 в 12:20</td>
+                            </tr>
+                            <tr class="history__item">
+                                <td class="history__name">Илья</td>
+                                <td class="history__price">10 999 р</td>
+                                <td class="history__time">19.03.17 в 10:20</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
 </div>
 
 <footer class="main-footer">
     <nav class="nav">
         <ul class="nav__list container">
-            <!--заполните этот список из массива категорий-->
-            <?php foreach ( $category_array as $value) { ?>
-                <li class="nav__item">
-                    <a href="pages/all-lots.html"> <?= $value['category_name']; ?> </a>
-
-                </li>
-                <?php
-            }
-            ?>
+            <li class="nav__item">
+                <a href="all-lots.html">Доски и лыжи</a>
+            </li>
+            <li class="nav__item">
+                <a href="all-lots.html">Крепления</a>
+            </li>
+            <li class="nav__item">
+                <a href="all-lots.html">Ботинки</a>
+            </li>
+            <li class="nav__item">
+                <a href="all-lots.html">Одежда</a>
+            </li>
+            <li class="nav__item">
+                <a href="all-lots.html">Инструменты</a>
+            </li>
+            <li class="nav__item">
+                <a href="all-lots.html">Разное</a>
+            </li>
         </ul>
     </nav>
     <div class="main-footer__bottom container">
         <div class="main-footer__copyright">
-            <p>© 2018, YetiCave</p>
+            <p>© 2017, YetiCave</p>
             <p>Интернет-аукцион сноубордического и горнолыжного снаряжения</p>
         </div>
         <div class="main-footer__social social">
