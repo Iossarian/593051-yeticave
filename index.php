@@ -35,10 +35,10 @@ $user_avatar = 'img/user.jpg';
 
 require_once ('functions.php');
 
+
 $page_content = include_template('index.php', [
     'goods_array' => $goods_array,
     'format_time' => $format_time,
-    'value[\'end_time\']' => $value['end_time'],
     'category_array' => $category_array,
     'lots_array' => $lots_array,
     'goods_list' => $goods_list
