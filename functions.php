@@ -25,5 +25,10 @@ function formatThePrice ($price) {
     }
 }
 
-
+if (isset($_GET['lot']) && $_GET['id'] == 'lots.id') {
+    $sql = "SELECT lots.id, name, image, start_price, end_time, category_name FROM lots
+            JOIN category ON category.id = lots.category_id";
+    $sql_lot_id_result = mysqli_query($con, $sql_lots);
+    $lots_id_array = mysqli_fetch_all($sql_lots_result, MYSQLI_ASSOC);
+    }
 ?>
