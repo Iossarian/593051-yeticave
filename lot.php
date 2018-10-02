@@ -28,16 +28,14 @@ $lot_content = include_template ('lot.php', [
     'format_time' => $format_time
 ]);
 
-if (isset($_GET['id']) && $_GET['id'] == "$id") {
-    $query = http_build_query($_GET);
-    $sql = "SELECT lots.id, name, image, start_price, end_time, category_name FROM lots
-            JOIN category ON category.id = lots.category_id";
-        if ($res = mysqli_query($con, $sql)) {
-            $lot = mysqli_fetch_all($res, MYSQLI_ASSOC);
-        }
+
+if (isset($_GET['lot']) && $_GET['lot'] == '$id') {
+    $sql_lots = "SELECT lots.id, name, image, start_price, end_time, category_name FROM lots
+            JOIN category ON category.id = lots.category_id
+            ORDER BY create_date DESC";
+    $res = mysqli_query($con, $sql_lots);
+    $lots_array = mysqli_fetch_all($sql_lots, MYSQLI_ASSOC);
 }
-
-
 echo $lot_content;
 
 
