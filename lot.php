@@ -24,8 +24,8 @@ $lots_array = mysqli_fetch_all($sql_lots_result, MYSQLI_ASSOC);
 
 //Подключение параметра запроса
 $lot = mysqli_fetch_assoc( $sql_lots_result);
-if (isset($_GET['id'])) {
-    $id = intval($_GET['id']);
+if (isset($_GET['id']) && $_GET['lot'] == '$id') {
+    $id = ($_GET['id']);
 } else {
     http_response_code(404);
 }
