@@ -37,6 +37,7 @@ require_once ('functions.php');
 $lot_content = include_template ('lot.php', [
     'category_array' => $category_array,
     'lots_array' => $lots_array,
+    'lot' => $lot,
     'format_time' => $format_time
 ]);
 

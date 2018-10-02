@@ -40,6 +40,7 @@ $page_content = include_template('index.php', [
     'goods_array' => $goods_array,
     'format_time' => $format_time,
     'category_array' => $category_array,
+    'lot' => $lot,
     'lots_array' => $lots_array
 ]);
 $layout_content = include_template ('layout.php', [
