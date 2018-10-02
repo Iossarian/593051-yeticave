@@ -48,13 +48,13 @@
     </nav>
     <section class="lot-item container">
         <!--<php foreach ($lots_array as $value) { ?> -->
-      <h2><?= htmlspecialchars($id['name']); ?></h2>
+      <h2><?= htmlspecialchars($lot['name']); ?></h2>
       <div class="lot-item__content">
         <div class="lot-item__left">
           <div class="lot-item__image">
-            <img src="<?= htmlspecialchars($id['image']); ?>" width="730" height="548" alt="Сноуборд">
+            <img src="<?= htmlspecialchars($lot['image']); ?>" width="730" height="548" alt="Сноуборд">
           </div>
-          <p class="lot-item__category">Категория: <span><?= htmlspecialchars($id['category_name']) ?></span></p>
+          <p class="lot-item__category">Категория: <span><?= htmlspecialchars($lot['category_name']) ?></span></p>
           <p class="lot-item__description">Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив
             снег
             мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот
@@ -70,7 +70,7 @@
           <div class="lot-item__state">
             <div class="lot-item__timer timer">
                 <?php
-                $lot_end = strtotime($id['end_time']);
+                $lot_end = strtotime($lot['end_time']);
                 $time_left = $lot_end - time();
                 $format_time = gmdate("H:i", $time_left);
                 ?>
