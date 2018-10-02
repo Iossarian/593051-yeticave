@@ -18,18 +18,19 @@ $category_array = mysqli_fetch_all($sql_result, MYSQLI_ASSOC);
 $sql_lots = "SELECT lots.id, name, image, start_price, end_time, category_name FROM lots
             JOIN category ON category.id = lots.category_id
             ORDER BY create_date DESC
-            WHERE lots.id = '$id'";
+            WHERE lots.id = " .$id;
 $sql_lots_result = mysqli_query($con, $sql_lots);
 $lots_array = mysqli_fetch_all($sql_lots_result, MYSQLI_ASSOC);
 
 //Подключение параметра запроса
-$lot = mysqli_fetch_assoc( $sql_lots_result);
-if (isset($_GET['id']) && $_GET['lot'] == '$id') {
-    $id = ($_GET['id']);
-} else {
-    http_response_code(404);
+$id = intval($_GET['id']);
+if ($result = mysqli_query($con, $sql_lots)) {
+    if (!mysqli_num_rows($result)) {
+        http_response_code(404);
+    } else {
+        $lot = mysqli_fetch_array($result, MYSQLI_ASSOC);
+    }
 }
-
 require_once ('functions.php');
 $lot_content = include_template ('lot.php', [
     'category_array' => $category_array,
