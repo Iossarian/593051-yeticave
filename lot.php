@@ -27,6 +27,17 @@ $lot_content = include_template ('lot.php', [
     'lots_array' => $lots_array,
     'format_time' => $format_time
 ]);
+
+if (isset($_GET['id']) && $_GET['id'] == "$id") {
+    $query = http_build_query($_GET);
+    $sql = "SELECT lots.id, name, image, start_price, end_time, category_name FROM lots
+            JOIN category ON category.id = lots.category_id";
+        if ($res = mysqli_query($con, $sql)) {
+            $lot = mysqli_fetch_all($res, MYSQLI_ASSOC);
+        }
+}
+
+
 echo $lot_content;
 
 

@@ -47,14 +47,14 @@
       </ul>
     </nav>
     <section class="lot-item container">
-        <?php foreach ($lots_array as $value) { ?>
-      <h2><?= htmlspecialchars($value['name']); ?></h2>
+        <!--<php foreach ($lots_array as $value) { ?> -->
+      <h2><?= htmlspecialchars($id['name']); ?></h2>
       <div class="lot-item__content">
         <div class="lot-item__left">
           <div class="lot-item__image">
-            <img src="<?= htmlspecialchars($value['image']); ?>" width="730" height="548" alt="Сноуборд">
+            <img src="<?= htmlspecialchars($id['image']); ?>" width="730" height="548" alt="Сноуборд">
           </div>
-          <p class="lot-item__category">Категория: <span><?= htmlspecialchars($value['category_name']) ?></span></p>
+          <p class="lot-item__category">Категория: <span><?= htmlspecialchars($id['category_name']) ?></span></p>
           <p class="lot-item__description">Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив
             снег
             мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот
@@ -70,7 +70,7 @@
           <div class="lot-item__state">
             <div class="lot-item__timer timer">
                 <?php
-                $lot_end = strtotime($value['end_time']);
+                $lot_end = strtotime($id['end_time']);
                 $time_left = $lot_end - time();
                 $format_time = gmdate("H:i", $time_left);
                 ?>
@@ -79,7 +79,7 @@
             <div class="lot-item__cost-state">
               <div class="lot-item__rate">
                 <span class="lot-item__amount">Текущая цена</span>
-                <span class="lot-item__cost"><?= htmlspecialchars(formatThePrice($value['start_price'])); ?></span>
+                <span class="lot-item__cost"><?= htmlspecialchars(formatThePrice(['start_price'])); ?></span>
               </div>
               <div class="lot-item__min-cost">
                 Мин. ставка <span>12 000 р</span>
@@ -150,9 +150,6 @@
           </div> -->
         </div>
       </div>
-            <?php
-        }
-        ?>
     </section>
   </main>
 
