@@ -70,16 +70,16 @@
             <div class="lot-item__cost-state">
               <div class="lot-item__rate">
                 <span class="lot-item__amount">Текущая цена</span>
-                  <span class="lot-item__cost"></span><?=getCurPrice($lot); ?></span>
+                  <span class="lot-item__cost"></span><?= getCurPrice($lot);?></span>
               </div>
               <div class="lot-item__min-cost">
-                Мин. ставка <span><?=getMinBet ($lot); ?></span>
+                Мин. ставка <span><?=getMinBet($lot) . ' ₽'; ?></span>
               </div>
             </div>
             <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
               <p class="lot-item__form-item">
                 <label for="cost">Ваша ставка</label>
-                <input id="cost" type="number" name="cost" placeholder="<?= ($lot['bet_step']) + ($lot['MAX(bet.price)']); ?>">
+                <input id="cost" type="number" name="cost" placeholder="<?=getMinBet ($lot); ?>">
               </p>
               <button type="submit" class="button">Сделать ставку</button>
             </form>

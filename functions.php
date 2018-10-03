@@ -27,17 +27,17 @@ function formatThePrice ($price) {
 
 function getCurPrice ($lot) {
     if (isset($lot['MAX(bet.price)'])) {
-        echo $lot['MAX(bet.price)'];
+        echo $lot['MAX(bet.price)'] . ' ₽';
     } else {
-    echo $lot['start_price'];
+    echo $lot['start_price'] . ' ₽';
     }
 }
 
 function getMinBet ($lot) {
     if (isset($lot['MAX(bet.price)'])) {
-        echo ($lot['bet_step']) + ($lot['MAX(bet.price)']) . ' ₽';
+        echo ($lot['bet_step']) + ($lot['MAX(bet.price)']);
     } else {
-        echo ($lot['start_price']) + ($lot['bet_step']) . ' ₽';
+        echo ($lot['start_price']) + ($lot['bet_step']);
     }
 
 }
