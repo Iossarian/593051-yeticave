@@ -20,7 +20,7 @@
                 <input type="search" name="search" placeholder="Поиск лота">
                 <input class="main-header__search-btn" type="submit" name="find" value="Найти">
             </form>
-            <a class="main-header__add-lot button" href="add-lot.html">Добавить лот</a>
+            <a class="main-header__add-lot button" href="../add.php">Добавить лот</a>
             <nav class="user-menu">
                 <ul class="user-menu__list">
                     <li class="user-menu__item">
@@ -37,51 +37,39 @@
     <main>
         <nav class="nav">
             <ul class="nav__list container">
+                <?php foreach ($category_array as $value) { ?>
                 <li class="nav__item">
-                    <a href="all-lots.html">Доски и лыжи</a>
+                    <a href="pages/all-lots.html"><?= $value['category_name']; ?></a>
                 </li>
-                <li class="nav__item">
-                    <a href="all-lots.html">Крепления</a>
-                </li>
-                <li class="nav__item">
-                    <a href="all-lots.html">Ботинки</a>
-                </li>
-                <li class="nav__item">
-                    <a href="all-lots.html">Одежда</a>
-                </li>
-                <li class="nav__item">
-                    <a href="all-lots.html">Инструменты</a>
-                </li>
-                <li class="nav__item">
-                    <a href="all-lots.html">Разное</a>
-                </li>
+                    <?php
+                }
+                ?>
             </ul>
         </nav>
-        <form class="form form--add-lot container form--invalid" action="https://echo.htmlacademy.ru" method="post"> <!-- form--invalid -->
+        <form class="form form--add-lot container form--invalid" action="../add.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
             <h2>Добавление лота</h2>
             <div class="form__container-two">
                 <div class="form__item form__item--invalid"> <!-- form__item--invalid -->
                     <label for="lot-name">Наименование</label>
-                    <input id="lot-name" type="text" name="lot-name" placeholder="Введите наименование лота" required>
+                    <input id="lot-name" type="text" name="lot[name]" placeholder="Введите наименование лота" required>
                     <span class="form__error">Введите наименование лота</span>
                 </div>
                 <div class="form__item">
                     <label for="category">Категория</label>
-                    <select id="category" name="category" required>
+                    <select id="category" name="lot[category_id]" required>
                         <option>Выберите категорию</option>
-                        <option>Доски и лыжи</option>
-                        <option>Крепления</option>
-                        <option>Ботинки</option>
-                        <option>Одежда</option>
-                        <option>Инструменты</option>
-                        <option>Разное</option>
+                        <?php foreach ($category_array as $value) { ?>
+                            <option><?=$value['category_name']; ?></option>
+                            <?php
+                        }
+                        ?>
                     </select>
                     <span class="form__error">Выберите категорию</span>
                 </div>
             </div>
             <div class="form__item form__item--wide">
                 <label for="message">Описание</label>
-                <textarea id="message" name="message" placeholder="Напишите описание лота" required></textarea>
+                <textarea id="message" name="lot[description]" placeholder="Напишите описание лота" required></textarea>
                 <span class="form__error">Напишите описание лота</span>
             </div>
             <div class="form__item form__item--file"> <!-- form__item--uploaded -->
@@ -93,7 +81,7 @@
                     </div>
                 </div>
                 <div class="form__input-file">
-                    <input class="visually-hidden" type="file" id="photo2" value="">
+                    <input class="visually-hidden" type="file" name="lot[image]" id="photo2" value="">
                     <label for="photo2">
                         <span>+ Добавить</span>
                     </label>
@@ -102,17 +90,17 @@
             <div class="form__container-three">
                 <div class="form__item form__item--small">
                     <label for="lot-rate">Начальная цена</label>
-                    <input id="lot-rate" type="number" name="lot-rate" placeholder="0" required>
+                    <input id="lot-rate" type="number" name="lot[start_price]" placeholder="0" required>
                     <span class="form__error">Введите начальную цену</span>
                 </div>
                 <div class="form__item form__item--small">
                     <label for="lot-step">Шаг ставки</label>
-                    <input id="lot-step" type="number" name="lot-step" placeholder="0" required>
+                    <input id="lot-step" type="number" name="lot[bet_step]" placeholder="0" required>
                     <span class="form__error">Введите шаг ставки</span>
                 </div>
                 <div class="form__item">
                     <label for="lot-date">Дата окончания торгов</label>
-                    <input class="form__input-date" id="lot-date" type="date" name="lot-date" required>
+                    <input class="form__input-date" id="lot-date" type="date" name="lot[end_time]" required>
                     <span class="form__error">Введите дату завершения торгов</span>
                 </div>
             </div>
@@ -126,24 +114,13 @@
 <footer class="main-footer">
     <nav class="nav">
         <ul class="nav__list container">
+            <?php foreach ($category_array as $value) { ?>
             <li class="nav__item">
-                <a href="all-lots.html">Доски и лыжи</a>
+                <a href="pages/all-lots.html"><?=$value['category_name']; ?></a>
             </li>
-            <li class="nav__item">
-                <a href="all-lots.html">Крепления</a>
-            </li>
-            <li class="nav__item">
-                <a href="all-lots.html">Ботинки</a>
-            </li>
-            <li class="nav__item">
-                <a href="all-lots.html">Одежда</a>
-            </li>
-            <li class="nav__item">
-                <a href="all-lots.html">Инструменты</a>
-            </li>
-            <li class="nav__item">
-                <a href="all-lots.html">Разное</a>
-            </li>
+                <?php
+            }
+            ?>
         </ul>
     </nav>
     <div class="main-footer__bottom container">
