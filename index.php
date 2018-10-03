@@ -40,12 +40,10 @@ $page_content = include_template('index.php', [
     'goods_array' => $goods_array,
     'format_time' => $format_time,
     'category_array' => $category_array,
-    'lots_array' => $lots_array,
-    'goods_list' => $goods_list
+    'lots_array' => $lots_array
 ]);
 $layout_content = include_template ('layout.php', [
     'content' => $page_content,
-    'goods_array' => $goods_array,
     'is_auth' => $is_auth,
     'category_array' => $category_array,
     'title' => 'Yeticave - Главная страница'
