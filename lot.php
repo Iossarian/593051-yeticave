@@ -26,7 +26,6 @@ $id = intval($_GET['id']);
 $sql_l =    "SELECT lots.id, name, image, start_price, description, MAX(bet.price), bet_step, end_time, category_name   FROM lots "
             . "JOIN category ON category.id = lots.category_id "
             . "JOIN bet ON bet.lot_id = lots.id "
-            //. "GROUP BY lots.id "
             . "WHERE lots.id = " .$id;
 
 if ($result = mysqli_query($con, $sql_l)) {

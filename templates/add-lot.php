@@ -59,7 +59,7 @@
                     <select id="category" name="lot[category_id]" required>
                         <option>Выберите категорию</option>
                         <?php foreach ($category_array as $value) { ?>
-                            <option><?=$value['category_name']; ?></option>
+                            <option value="<?=$value['id']?>"><?=$value['category_name']; ?></option>
                             <?php
                         }
                         ?>

@@ -42,46 +42,38 @@ function getMinBet ($lot) {
 }
 //Функция-обработчик
 /**
- * Создает подготовленное выражение на основе готового SQL запроса и переданных данных
+ * Создает подготовленное выражение на основе готового SQL запроса и переданных данных.
  *
- * @param $link mysqli Ресурс соединения
- * @param $sql string SQL запрос с плейсхолдерами вместо значений
- * @param array $data Данные для вставки на место плейсхолдеров
+ * @param mysqli $link Ресурс соединения
+ * @param string $sql  SQL запрос с плейсхолдерами вместо значений
+ * @param array  $data Данные для вставки на место плейсхолдеров
+ *
+ * @throws \UnexpectedValueException Если тип параметра не поддерживается
  *
  * @return mysqli_stmt Подготовленное выражение
  */
-function db_get_prepare_stmt($con, $sql, $data = []) {
-    $stmt = mysqli_prepare($con, $sql);
-
-    if ($data) {
-        $types = '';
-        $stmt_data = [];
-
-        foreach ($data as $value) {
-            $type = null;
-
-            if (is_int($value)) {
-                $type = 'i';
-            }
-            else if (is_string($value)) {
-                $type = 's';
-            }
-            else if (is_double($value)) {
-                $type = 'd';
-            }
-
-            if ($type) {
-                $types .= $type;
-                $stmt_data[] = $value;
-            }
-        }
-
-        $values = array_merge([$stmt, $types], $stmt_data);
-
-        $func = 'mysqli_stmt_bind_param';
-        $func(...$values);
+function db_get_prepare_stmt(mysqli $con, string $sql_post, array $data = [])
+{
+    $stmt = mysqli_prepare($con, $sql_post);
+    if (empty($data)) {
+        return $stmt;
     }
-
+    static $allowed_types = [
+        'integer' => 'i',
+        'double' => 'd',
+        'string' => 's',
+    ];
+    $types = '';
+    $stmt_data = [];
+    foreach ($data as $value) {
+        $type = gettype($value);
+        if (!isset($allowed_types[$type])) {
+            throw new \UnexpectedValueException(sprintf('Unexpected parameter type "%s".', $type));
+        }
+        $types .= $allowed_types[$type];
+        $stmt_data[] = $value;
+    }
+    mysqli_stmt_bind_param($stmt, $types, ...$stmt_data);
     return $stmt;
 }
 ?>
