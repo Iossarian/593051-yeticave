@@ -22,9 +22,10 @@ $addLot_content = include_template ('add-lot.php', [
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lot = $_POST['lot'];
 
-    $filename = 'img/' . uniqid() . '.jpg';
+    $filename =  'img' . DIRECTORY_SEPARATOR .  uniqid() . '.jpg';
     $lot['image'] = $filename;
-    move_uploaded_file($_FILES['image']['tmp_name'],   __DIR__ . '/' . $filename);
+    move_uploaded_file($_FILES['image']['tmp_name'],    __DIR__. DIRECTORY_SEPARATOR . $filename);
+    $upload_dir = __DIR__. DIRECTORY_SEPARATOR . $filename;
 
     $sql_post = 'INSERT INTO lots (create_date, category_id, author_id, name, description, start_price, bet_step, end_time, image ) VALUES (NOW(), ?, 5, ?, ?, ?, ?, ?, ?)';
 
@@ -39,7 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //var_dump($move);
         //var_dump($lot['image']);
         //var_dump(is_dir($upload_dir) && is_writable($upload_dir));
-        var_dump($upload_dir);
+        var_dump(is_dir($upload_dir));
+        //var_dump($upload_dir);
         //header("Location: lot.php?id=" . $lot_id);
     }
 }
