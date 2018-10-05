@@ -22,28 +22,29 @@ $addLot_content = include_template ('add-lot.php', [
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lot = $_POST['lot'];
 
-    $filename = uniqid() . '.jpg';
+    $filename = 'img/' . uniqid() . '.jpg';
     $lot['image'] = $filename;
-    move_uploaded_file($_FILES['image']['tmp_name'], 'image/' . $filename);
+    move_uploaded_file($_FILES['image']['tmp_name'],   __DIR__ . '/' . $filename);
 
-    $sql_post = 'INSERT INTO lots (create_date, category_id, author_id, lots.name, description, start_price, bet_step, end_time, image ) VALUES (NOW(), ?, 5, ?, ?, ?, ?, ?, ?)';
+    $sql_post = 'INSERT INTO lots (create_date, category_id, author_id, name, description, start_price, bet_step, end_time, image ) VALUES (NOW(), ?, 5, ?, ?, ?, ?, ?, ?)';
 
-    $stmt = db_get_prepare_stmt($con, $sql_post, [$lot['category_id'], $lot['name'], $lot['description'], $lot['image'], (int)$lot['start_price'], $lot['bet_step'], $lot['end_time']]);
+    $stmt = db_get_prepare_stmt($con, $sql_post, [$lot['category_id'], $lot['name'], $lot['description'], (int)$lot['start_price'], $lot['bet_step'], $lot['end_time'], $lot['image']]);
     $res = mysqli_stmt_execute($stmt);
+    $dir = __DIR__ . '/' . $filename;
 
     if ($res) {
         $lot_id = mysqli_insert_id($con);
-
-        header("Location: lot.php?id=" . $lot_id);
+        //var_dump($_FILES);
+        //var_dump($filename);
+        //var_dump($move);
+        //var_dump($lot['image']);
+        //var_dump(is_dir($upload_dir) && is_writable($upload_dir));
+        var_dump($upload_dir);
+        //header("Location: lot.php?id=" . $lot_id);
     }
 }
-//ar_dump($sql_result);
-//var_dump($con);
-//var_dump($sql);
-//var_dump($stmt);
-//var_dump($res);
-var_dump(mysqli_error($con));
-var_dump($lot['start_price']);
+
+//var_dump(mysqli_error($con));
 
 echo $addLot_content;
 ?>
