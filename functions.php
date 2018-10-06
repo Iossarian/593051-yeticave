@@ -44,8 +44,8 @@ function getMinBet ($lot) {
 /**
  * Создает подготовленное выражение на основе готового SQL запроса и переданных данных.
  *
- * @param mysqli $link Ресурс соединения
- * @param string $sql  SQL запрос с плейсхолдерами вместо значений
+ * @param mysqli $con Ресурс соединения
+ * @param string $sql_post  SQL запрос с плейсхолдерами вместо значений
  * @param array  $data Данные для вставки на место плейсхолдеров
  *
  * @throws \UnexpectedValueException Если тип параметра не поддерживается

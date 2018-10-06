@@ -23,7 +23,7 @@
                 $value = isset($lot['category']) ? $lot['category'] : ""; ?>
                 <div class="form__item <?=$classname;?>">
                     <label for="category">Категория</label>
-                    <select id="category" name="category_id" required>
+                    <select id="category" name="category" required>
                         <option value="">Выберите категорию</option>
                         <?php foreach ($category_array as $value) { ?>
                             <option value="<?=$value['id']?>"><?=$value['category_name']; ?></option>
@@ -34,8 +34,8 @@
                     <span class="form__error">Выберите категорию</span>
                 </div>
             </div>
-            <?php $classname = isset($valid_errors['discription']) ? "form__item--invalid" :"";
-            $value = isset($lot['discription']) ? $lot['discription'] : ""; ?>
+            <?php $classname = isset($valid_errors['description']) ? "form__item--invalid" :"";
+            $value = isset($lot['description']) ? $lot['description'] : ""; ?>
             <div class="form__item form__item--wide <?=$classname;?>">
                 <label for="message">Описание</label>
                 <textarea id="message" name="description" value="<?=$value?>" placeholder="Напишите описание лота" required></textarea>

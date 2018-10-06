@@ -13,17 +13,28 @@ $category_array = mysqli_fetch_all($sql_result, MYSQLI_ASSOC);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lot = $_POST['lot'];
 //Валидация
-    $required = ['name', 'category', 'discription', 'start_price', 'bet_step', 'image', 'end_time' ];
+    $required = ['name', 'category', 'description', 'image', 'start_price', 'bet_step', 'end_time' ];
     $dict = [
         'name' => 'Название лота',
         'category' => 'Категория лота',
-        'discription' => 'Описание лота',
+        'description' => 'Описание лота',
         'image' => 'Изображение лота',
         'start_price' => 'Стартовая цена лота',
         'bet_step' => 'Шаг ставки',
         'end_time' => 'Время завершения аукциона'
     ];
+    $price_fields = ['start_price', 'bet_step'];
+    $min_price = 1;
     $valid_errors = [];
+
+ //Проверка стоимости
+    foreach($price_fields as $key) {
+        $i = $_POST[$key];
+        if (!is_numeric($i) || $i < $min_price) {
+            $valid_errors[$key] ='Укажите положительное число';
+        }
+    }
+
     foreach ($required as $key) {
         if (empty($_POST[$key])) {
             $valid_errors[$key] = 'Это поле необходимо заполнить';
@@ -36,13 +47,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $file_type = finfo_file($finfo, $tmp_name);
         if ($file_type !== "image/jpeg") {
             $valid_errors['image'] = 'Загрузите картинку в формате JPEG';
+        } elseif (empty(['image'])) {
+            $valid_errors['image'] = 'Вы не загрузили файл';
         } else {
             $filename = 'img' . DIRECTORY_SEPARATOR . uniqid() . '.jpg';
             $lot['image'] = $filename;
             move_uploaded_file($_FILES['lot']['tmp_name']['image'], __DIR__ . DIRECTORY_SEPARATOR . $filename);
         }
-    } else {
-        $valid_errors['image'] = 'Вы не загрузили файл';
     }
     if (count($valid_errors) > 0) {
         $content = include_template('add.php', ['lot' => $lot, 'valid_errors' => $valid_errors, 'dict' => $dict]);
@@ -60,7 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 var_dump($valid_errors);
-//var_dump($required);
+var_dump($_POST);
+
 
 $addLot_content = include_template ('add-lot.php', [
     'category_array' => $category_array
