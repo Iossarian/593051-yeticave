@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ];
     $valid_errors = [];
     foreach ($required as $key) {
-        if (empty($lot[$key])) {
+        if (empty($_POST[$key])) {
             $valid_errors[$key] = 'Это поле необходимо заполнить';
         }
     }
@@ -60,6 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 var_dump($valid_errors);
+//var_dump($required);
+
 $addLot_content = include_template ('add-lot.php', [
     'category_array' => $category_array
 ]);
