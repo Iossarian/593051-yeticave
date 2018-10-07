@@ -52,9 +52,9 @@ function getMinBet ($lot) {
  *
  * @return mysqli_stmt Подготовленное выражение
  */
-function db_get_prepare_stmt(mysqli $con, string $sql_post, array $data = [])
+function db_get_prepare_stmt(mysqli $con, string $sql_post , array $data = [])
 {
-    $stmt = mysqli_prepare($con, $sql_post);
+    $stmt = mysqli_prepare($con, $sql_post );
     if (empty($data)) {
         return $stmt;
     }
@@ -69,6 +69,7 @@ function db_get_prepare_stmt(mysqli $con, string $sql_post, array $data = [])
         $type = gettype($value);
         if (!isset($allowed_types[$type])) {
             throw new \UnexpectedValueException(sprintf('Unexpected parameter type "%s".', $type));
+
         }
         $types .= $allowed_types[$type];
         $stmt_data[] = $value;
