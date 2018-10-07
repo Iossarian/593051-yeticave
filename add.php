@@ -13,10 +13,10 @@ $category_array = mysqli_fetch_all($sql_result, MYSQLI_ASSOC);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lot = $_POST['lot'];
 //Валидация
-    $required = ['name', 'category', 'description', 'start_price', 'bet_step', 'end_time' ];
+    $required = ['name', 'category_id', 'description', 'start_price', 'bet_step', 'end_time' ];
     $dict = [
         'name' => 'Название лота',
-        'category' => 'Категория лота',
+        'category_id' => 'Категория лота',
         'description' => 'Описание лота',
         'start_price' => 'Стартовая цена лота',
         'bet_step' => 'Шаг ставки',
@@ -40,8 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 //Проверка файла
-    if (!empty($_FILES['lot']['name']['image'])) {
-        $tmp_name = $_FILES['lot']['tmp_name']['image'];
+    if (!empty($_FILES['image']['name'])) {
+        $tmp_name = $_FILES['image']['tmp_name'];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $file_type = finfo_file($finfo, $tmp_name);
         if ($file_type !== "image/jpeg") {
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $filename = 'img' . DIRECTORY_SEPARATOR . uniqid() . '.jpg';
             $lot['image'] = $filename;
-            move_uploaded_file($_FILES['lot']['tmp_name']['image'], __DIR__ . DIRECTORY_SEPARATOR . $filename);
+            move_uploaded_file($_FILES['image']['tmp_name'], __DIR__ . DIRECTORY_SEPARATOR . $filename);
         }
     }
 
@@ -69,11 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
-//var_dump($valid_errors);
+var_dump($valid_errors);
 //var_dump($data);
 //var_dump($res);
 var_dump($_POST);
-var_dump($stmt);
 
 $addLot_content = include_template ('add-lot.php', [
     'category_array' => $category_array
