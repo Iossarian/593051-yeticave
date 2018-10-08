@@ -2,13 +2,8 @@
 date_default_timezone_set("Europe/Moscow");
 
 //подключение БД
-$con = mysqli_connect("localhost", "root", "", "Yeticave");
-mysqli_set_charset($con, "utf8");
-//проверка подключения
-if ($con == false) {
-    print ("Ошибка подключения: " . mysqli_connect_error());
-    die();
-}
+require_once ('db.php');
+
 //Подключение категорий
 $sql = "SELECT id, category_name FROM category";
 $sql_result = mysqli_query($con, $sql);
