@@ -9,6 +9,7 @@ $sql = "SELECT category.id, category_name FROM category ";
 $sql_result = mysqli_query($con, $sql);
 $category_array = mysqli_fetch_all($sql_result, MYSQLI_ASSOC);
 
+
 //Запрос на добавление лота
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lot = $_POST['lot'];
@@ -44,23 +45,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $tmp_name = $_FILES['image']['tmp_name'];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $file_type = finfo_file($finfo, $tmp_name);
+        $filename = 'img' . DIRECTORY_SEPARATOR . uniqid() . '.jpg';
+        $lot['image'] = $filename;
         if ($file_type !== "image/jpeg") {
             $valid_errors['image'] = 'Загрузите картинку в формате JPEG';
-        } elseif (empty(['image'])) {
-                $valid_errors['image'] = 'Вы не загрузили файл';
         } else {
-            $filename = 'img' . DIRECTORY_SEPARATOR . uniqid() . '.jpg';
-            $lot['image'] = $filename;
             move_uploaded_file($_FILES['image']['tmp_name'], __DIR__ . DIRECTORY_SEPARATOR . $filename);
         }
+    } else  {
+        $valid_errors['image'] = 'Вы не загрузили файл';
     }
 
+
+
     if (count($valid_errors) > 0) {
-        $content = include_template('add.php', ['lot' => $lot, 'valid_errors' => $valid_errors, 'dict' => $dict]);
+
     } else {
         $sql_post = 'INSERT INTO lots (create_date, author_id, category_id, name, description, start_price, bet_step, end_time, image ) VALUES (NOW(), 5, ?, ?, ?, ?, ?, ?, ?)';
 
-        $stmt = db_get_prepare_stmt($con, $sql_post, [$lot['category_id'], $lot['name'], $lot['description'], $lot['start_price'], $lot['bet_step'], $lot['end_time'], $lot['image']]);
+        $stmt = db_get_prepare_stmt($con, $sql_post, [$_POST['category_id'], $_POST['name'], $_POST['description'], $_POST['start_price'], $_POST['bet_step'], $_POST['end_time'], $lot['image']]);
         $res = mysqli_stmt_execute($stmt);
 
         if ($res) {
@@ -69,12 +72,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
-var_dump($valid_errors);
-//var_dump($data);
-//var_dump($res);
-var_dump($_POST);
-
 $addLot_content = include_template ('add-lot.php', [
+    'valid_errors' => $valid_errors,
+    'dict' => $dict,
     'category_array' => $category_array
 ]);
 $layout_content = include_template ('layout.php', [

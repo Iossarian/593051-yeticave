@@ -68,7 +68,7 @@ function db_get_prepare_stmt(mysqli $con, string $sql_post , array $data = [])
     foreach ($data as $value) {
         $type = gettype($value);
         if (!isset($allowed_types[$type])) {
-            throw new \UnexpectedValueException(sprintf ('Unexpected parameter type "%s".', $type));
+            throw new \UnexpectedValueException(sprintf ('Unexpected parameter type "%s".', $type, var_dump($_POST)));
 
         }
         $types .= $allowed_types[$type];
