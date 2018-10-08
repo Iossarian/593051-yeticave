@@ -2,13 +2,8 @@
 date_default_timezone_set("Europe/Moscow");
 
 //подключение БД
-$con = mysqli_connect("localhost", "root", "", "Yeticave");
-mysqli_set_charset($con, "utf8");
-//проверка подключения
-if ($con == false) {
-    print ("Ошибка подключения: " . mysqli_connect_error());
-    die();
-}
+require_once ('db.php');
+
 //Подключение категорий
 $sql = "SELECT id, category_name FROM category";
 $sql_result = mysqli_query($con, $sql);
@@ -23,10 +18,9 @@ $lots_array = mysqli_fetch_all($sql_lots_result, MYSQLI_ASSOC);
 
 //Подключение параметра запроса
 $id = intval($_GET['id']);
-$sql_l =    "SELECT lots.id, name, image, start_price, description, MAX(bet.price), bet_step, end_time, category_name   FROM lots "
+$sql_l =    "SELECT lots.id, lots.name, image, start_price, description, MAX(bet.price), bet_step, end_time, category_name FROM lots "
             . "JOIN category ON category.id = lots.category_id "
             . "JOIN bet ON bet.lot_id = lots.id "
-            //. "GROUP BY lots.id "
             . "WHERE lots.id = " .$id;
 
 if ($result = mysqli_query($con, $sql_l)) {
@@ -36,15 +30,23 @@ if ($result = mysqli_query($con, $sql_l)) {
         $lot = mysqli_fetch_array($result, MYSQLI_ASSOC);
     }
 }
+
 require_once ('functions.php');
 $lot_content = include_template ('lot.php', [
     'category_array' => $category_array,
     'lots_array' => $lots_array,
     'lot' => $lot,
+    'bet' => $bet,
     'format_time' => $format_time
 ]);
+$layout_content = include_template ('layout.php', [
+    'content' => $lot_content,
+    'is_auth' => $is_auth,
+    'category_array' => $category_array,
+    'title' => 'Yeticave - Просмотр лота'
+]);
 
-echo $lot_content;
+echo $layout_content;
 
 
 
