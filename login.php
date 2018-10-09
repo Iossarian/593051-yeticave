@@ -13,7 +13,7 @@ if($_SERVER['REQUEST_METHOD'] =='POST') {
     $errors = [];
     foreach ($required as $field) {
         if(empty($form[$field])) {
-            $errors = 'Это поля обязательно к заполнению';
+            $errors[$field] = 'Это поле обязательно к заполнению';
         }
     }
     $email = mysqli_real_escape_string($con, $form['email']);
@@ -23,14 +23,36 @@ if($_SERVER['REQUEST_METHOD'] =='POST') {
     $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
 
     if(!count($errors) and $user) {
-
+        if (password_verify($form['password'], $user['password'])) {
+            $_SESSION['user'] = $user;
+        } else {
+            $errors['password'] = 'Неверный пароль';
+        }
+    } else {
+        $errors['email'] = 'Такого пользователя не существует';
+    }
+    if (count($errors)) {
+        $content = include_template('login.php', [
+                'form' => $form,
+                'errors' => $errors
+        ]);
+    } else {
+        header("Location: /index.php");
+        exit;
+    }
+} else {
+    if (isset($_SESSION['user'])) {
+        $content = include_template('welcome.php', ['username' => $_SESSION['user']['name']]);
     }
 }
 
 
 
+
 $content =  include_template('login.php', [
-    'category_array' => $category_array
+    'category_array' => $category_array,
+    'form' => $form,
+    'errors' => $errors
 ]);
 $layout_content = include_template ('layout.php', [
     '$title' => 'Вход в аккаунт',
