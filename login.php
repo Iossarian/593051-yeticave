@@ -1,6 +1,7 @@
 <?php
 require_once ('db.php');
 require_once ('functions.php');
+require_once ('data.php');
 session_start();
 //Подключение категорий
 $sql = "SELECT id, category_name FROM category";
@@ -31,12 +32,8 @@ if($_SERVER['REQUEST_METHOD'] =='POST') {
     } else {
         $errors['email'] = 'Такого пользователя не существует';
     }
-    if (count($errors)) {
-        $content = include_template('login.php', [
-                'form' => $form,
-                'errors' => $errors
-        ]);
-    } else {
+    if (!count($errors)) {
+        $is_auth = 1;
         header("Location: /index.php");
         exit;
     }

@@ -1,9 +1,8 @@
 <?php
 date_default_timezone_set("Europe/Moscow");
-
-//подключение БД
+require_once ('functions.php');
 require_once ('db.php');
-
+require_once ('data.php');
 //Подключение категорий
 $sql = "SELECT id, category_name FROM category";
 $sql_result = mysqli_query($con, $sql);
@@ -31,7 +30,6 @@ if ($result = mysqli_query($con, $sql_l)) {
     }
 }
 
-require_once ('functions.php');
 $lot_content = include_template ('lot.php', [
     'category_array' => $category_array,
     'lots_array' => $lots_array,
