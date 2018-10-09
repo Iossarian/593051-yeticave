@@ -45,16 +45,16 @@ function getMinBet ($lot) {
  * Создает подготовленное выражение на основе готового SQL запроса и переданных данных.
  *
  * @param mysqli $con Ресурс соединения
- * @param string $sql_post  SQL запрос с плейсхолдерами вместо значений
+ * @param string $sql  SQL запрос с плейсхолдерами вместо значений
  * @param array  $data Данные для вставки на место плейсхолдеров
  *
  * @throws \UnexpectedValueException Если тип параметра не поддерживается
  *
  * @return mysqli_stmt Подготовленное выражение
  */
-function db_get_prepare_stmt(mysqli $con, string $sql_post , array $data = [])
+function db_get_prepare_stmt(mysqli $con, string $sql , array $data = [])
 {
-    $stmt = mysqli_prepare($con, $sql_post );
+    $stmt = mysqli_prepare($con, $sql );
     if (empty($data)) {
         return $stmt;
     }
@@ -68,7 +68,7 @@ function db_get_prepare_stmt(mysqli $con, string $sql_post , array $data = [])
     foreach ($data as $value) {
         $type = gettype($value);
         if (!isset($allowed_types[$type])) {
-            throw new \UnexpectedValueException(sprintf ('Unexpected parameter type "%s".', $type, var_dump($_POST)));
+            throw new \UnexpectedValueException(sprintf ('Unexpected parameter type "%s".', $type, var_dump($form)));
 
         }
         $types .= $allowed_types[$type];

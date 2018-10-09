@@ -3,6 +3,7 @@ date_default_timezone_set("Europe/Moscow");
 
 //подключение БД
 require_once ('db.php');
+require_once ('functions.php');
 
 //Подключение категорий
 $sql = "SELECT id, category_name FROM category";
@@ -28,7 +29,6 @@ $user_name = ''; // укажите здесь ваше имя
 $user_avatar = 'img/user.jpg';
 
 
-require_once ('functions.php');
 
 
 $page_content = include_template('index.php', [
