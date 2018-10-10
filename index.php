@@ -1,10 +1,10 @@
 <?php
 date_default_timezone_set("Europe/Moscow");
 
-//подключение БД
 require_once ('db.php');
 require_once ('functions.php');
 require_once ('data.php');
+$sesUser = startTheSession();
 
 //Подключение категорий
 $sql = "SELECT id, category_name FROM category";
@@ -28,6 +28,8 @@ $layout_content = include_template ('layout.php', [
     'content' => $page_content,
     'is_auth' => $is_auth,
     'category_array' => $category_array,
+    'username' => $userSes['username'],
+    'profile_img' => $userSes['profile_img'],
     'title' => 'Yeticave - Главная страница'
 ]);
 echo $layout_content;

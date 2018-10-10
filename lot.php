@@ -3,6 +3,7 @@ date_default_timezone_set("Europe/Moscow");
 require_once ('functions.php');
 require_once ('db.php');
 require_once ('data.php');
+$sesUser = startTheSession();
 //Подключение категорий
 $sql = "SELECT id, category_name FROM category";
 $sql_result = mysqli_query($con, $sql);
@@ -41,6 +42,8 @@ $layout_content = include_template ('layout.php', [
     'content' => $lot_content,
     'is_auth' => $is_auth,
     'category_array' => $category_array,
+    'username' => $userSes['username'],
+    'profile_img' => $userSes['profile_img'],
     'title' => 'Yeticave - Просмотр лота'
 ]);
 

@@ -2,6 +2,7 @@
 require_once ('db.php');
 require_once ('functions.php');
 require_once ('data.php');
+$sesUser = startTheSession();
 //Подключение категорий
 $sql = "SELECT id, category_name FROM category";
 $sql_result = mysqli_query($con, $sql);
@@ -60,7 +61,9 @@ $content =  include_template('sign-up.php', [
 $layout_content = include_template ('layout.php', [
     'title' => 'Регистрация аккаунта',
     'content' => $content,
-    'category_array' => $category_array
+    'category_array' => $category_array,
+    'username' => $userSes['username'],
+    'profile_img' => $userSes['profile_img']
 ]);
 echo $layout_content;
 ?>

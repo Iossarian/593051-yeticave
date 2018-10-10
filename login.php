@@ -2,7 +2,7 @@
 require_once ('db.php');
 require_once ('functions.php');
 require_once ('data.php');
-session_start();
+$sesUser = startTheSession();
 //Подключение категорий
 $sql = "SELECT id, category_name FROM category";
 $sql_result = mysqli_query($con, $sql);
@@ -23,7 +23,7 @@ if($_SERVER['REQUEST_METHOD'] =='POST') {
 
     $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
 
-    if(!count($errors) and $user) {
+    if(!count($errors) && $user) {
         if (password_verify($form['password'], $user['password'])) {
             $_SESSION['user'] = $user;
         } else {
@@ -54,6 +54,8 @@ $content =  include_template('login.php', [
 $layout_content = include_template ('layout.php', [
     '$title' => 'Вход в аккаунт',
     'content' => $content,
+    'username' => $userSes['username'],
+    'profile_img' => $userSes['profile_img'],
     'category_array' => $category_array
 ]);
 echo $layout_content;

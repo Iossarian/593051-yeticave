@@ -41,7 +41,7 @@ CREATE TABLE `lots` (
   `id` int(11) NOT NULL,
   `create_date` datetime DEFAULT NULL,
   `name` char(128) DEFAULT NULL,
-  `description` char(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
   `image` char(120) DEFAULT NULL,
   `start_price` int(11) DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,

@@ -77,4 +77,16 @@ function db_get_prepare_stmt(mysqli $con, string $sql , array $data = [])
     mysqli_stmt_bind_param($stmt, $types, ...$stmt_data);
     return $stmt;
 }
+function startTheSession() {
+    session_start();
+    $sesUser = [];
+    if (!empty($_SESSION['user'])) {
+        $sesUser['username'] = $_SESSION['user']['name'];
+        $sesUser['profile_img'] = $_SESSION['user']['profile_img'];
+    }
+    else {
+        $sesUser['username'] = $sesUser['profile_img'] = NULL;
+    }
+    return $sesUser;
+}
 ?>

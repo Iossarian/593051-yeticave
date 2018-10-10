@@ -23,7 +23,7 @@
 
             <nav class="user-menu">
 
-                <?php if ($is_auth): ?>
+                <?php if (isset($username)): ?>
                     <div class="user-menu__image">
                         <img src="img/user.jpg" width="40" height="40" alt="Пользователь">
                     </div>
@@ -54,7 +54,7 @@
             <!--заполните этот список из массива категорий-->
             <?php foreach ( $category_array as $value) { ?>
                 <li class="nav__item">
-                    <a href="pages/all-lots.html"> <?= $value['category_name']; ?> </a>
+                    <a href="all-lots.php"> <?= $value['category_name']; ?> </a>
 
                 </li>
                 <?php
