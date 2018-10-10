@@ -19,13 +19,14 @@
                 <input type="search" name="search" placeholder="Поиск лота">
                 <input class="main-header__search-btn" type="submit" name="find" value="Найти">
             </form>
+            <?php if(isset($_SESSION['user'])): ?>
             <a class="main-header__add-lot button" href="../add.php">Добавить лот</a>
-
+            <?php endif; ?>
             <nav class="user-menu">
 
                 <?php if (isset($username)): ?>
                     <div class="user-menu__image">
-                        <img src="img/user.jpg" width="40" height="40" alt="Пользователь">
+                        <img src="<?=$sesUser['profile_img'];?>" width="40" height="40" alt="Пользователь">
                     </div>
                     <div class="user-menu__logged">
                         <p><?=$username ?></p>

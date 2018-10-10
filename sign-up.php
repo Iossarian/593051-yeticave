@@ -29,6 +29,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "SELECT id FROM users WHERE email = '$email'";
     $res = mysqli_query($con, $sql);
 
+    if (!empty($_FILES['profile_img']['name'])) {
+        $tmp_name = $_FILES['profile_img']['tmp_name'];
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $file_type = finfo_file($finfo, $tmp_name);
+        $filename = 'img' . DIRECTORY_SEPARATOR . uniqid() . '.jpg';
+        $form['profile_img'] = $filename;
+        if ($file_type !== "image/jpeg") {
+            $errors['profile_img'] = 'Загрузите картинку в формате JPEG';
+        } else {
+            move_uploaded_file($_FILES['profile_img']['tmp_name'], __DIR__ . DIRECTORY_SEPARATOR . $filename);
+        }
+    }
 
     if (empty($form['email'])) {
         $errors['email'] = '- поле, необходимое к заполнению';
@@ -48,10 +60,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     $tpl_data['errors'] = $errors;
     $tpl_data['values'] = $form;
+
 }
 
 
-
+var_dump($errors);
+var_dump($_FILES);
 $content =  include_template('sign-up.php', [
     'category_array' => $category_array,
     'errors' => $errors,

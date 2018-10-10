@@ -4,7 +4,6 @@ require_once ('functions.php');
 require_once ('db.php');
 require_once ('data.php');
 $sesUser = startTheSession();
-$is_auth = true;
 
 //Подключение категорий
 $sql = "SELECT category.id, category_name FROM category ";
