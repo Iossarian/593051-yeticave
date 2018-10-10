@@ -54,8 +54,8 @@ $content =  include_template('login.php', [
 $layout_content = include_template ('layout.php', [
     '$title' => 'Вход в аккаунт',
     'content' => $content,
-    'username' => $userSes['username'],
-    'profile_img' => $userSes['profile_img'],
+    'username' => $sesUser['username'],
+    'profile_img' => $sesUser['profile_img'],
     'category_array' => $category_array
 ]);
 echo $layout_content;

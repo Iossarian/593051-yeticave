@@ -89,4 +89,12 @@ function startTheSession() {
     }
     return $sesUser;
 }
+function authorizedCheck () {
+    if (isset($_SESSION['user'])) {
+        
+    } else {
+        http_response_code(403);
+    }
+}
 ?>
+

@@ -62,8 +62,8 @@ $layout_content = include_template ('layout.php', [
     'title' => 'Регистрация аккаунта',
     'content' => $content,
     'category_array' => $category_array,
-    'username' => $userSes['username'],
-    'profile_img' => $userSes['profile_img']
+    'username' => $sesUser['username'],
+    'profile_img' => $sesUser['profile_img']
 ]);
 echo $layout_content;
 ?>

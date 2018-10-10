@@ -42,8 +42,8 @@ $layout_content = include_template ('layout.php', [
     'content' => $lot_content,
     'is_auth' => $is_auth,
     'category_array' => $category_array,
-    'username' => $userSes['username'],
-    'profile_img' => $userSes['profile_img'],
+    'username' => $sesUser['username'],
+    'profile_img' => $sesUser['profile_img'],
     'title' => 'Yeticave - Просмотр лота'
 ]);
 
