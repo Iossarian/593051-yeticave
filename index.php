@@ -1,8 +1,9 @@
 <?php
 date_default_timezone_set("Europe/Moscow");
-
-//подключение БД
 require_once ('db.php');
+require_once ('functions.php');
+require_once ('data.php');
+$sesUser = startTheSession();
 
 //Подключение категорий
 $sql = "SELECT id, category_name FROM category";
@@ -16,21 +17,6 @@ $sql_lots = "SELECT lots.id, name, image, start_price, end_time, category_name F
 $sql_lots_result = mysqli_query($con, $sql_lots);
 $lots_array = mysqli_fetch_all($sql_lots_result, MYSQLI_ASSOC);
 
-$is_auth = rand(0, 1);
-//таймер
-//foreach ($lots_array as $value) {
-    //$lot_end = strtotime($value['end_time']);
-    //$time_left = $lot_end - time();
-    //$format_time = gmdate("H:i", $time_left);
-//}
-
-$user_name = ''; // укажите здесь ваше имя
-$user_avatar = 'img/user.jpg';
-
-
-require_once ('functions.php');
-
-
 $page_content = include_template('index.php', [
     'goods_array' => $goods_array,
     'format_time' => $format_time,
@@ -41,6 +27,8 @@ $layout_content = include_template ('layout.php', [
     'content' => $page_content,
     'is_auth' => $is_auth,
     'category_array' => $category_array,
+    'username' => $sesUser['username'],
+    'profile_img' => $sesUser['profile_img'],
     'title' => 'Yeticave - Главная страница'
 ]);
 echo $layout_content;

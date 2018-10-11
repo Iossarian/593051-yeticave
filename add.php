@@ -1,8 +1,9 @@
 <?php
 date_default_timezone_set("Europe/Moscow");
 require_once ('functions.php');
-//подключение БД
 require_once ('db.php');
+require_once ('data.php');
+$sesUser = startTheSession();
 
 //Подключение категорий
 $sql = "SELECT category.id, category_name FROM category ";
@@ -81,6 +82,8 @@ $layout_content = include_template ('layout.php', [
     'content' => $addLot_content,
     'is_auth' => $is_auth,
     'category_array' => $category_array,
+    'username' => $sesUser['username'],
+    'profile_img' => $sesUser['profile_img'],
     'title' => 'Yeticave - Добавление лота'
 ]);
 echo $layout_content;

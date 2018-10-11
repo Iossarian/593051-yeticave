@@ -1,9 +1,9 @@
 <?php
 date_default_timezone_set("Europe/Moscow");
-
-//подключение БД
+require_once ('functions.php');
 require_once ('db.php');
-
+require_once ('data.php');
+$sesUser = startTheSession();
 //Подключение категорий
 $sql = "SELECT id, category_name FROM category";
 $sql_result = mysqli_query($con, $sql);
@@ -31,7 +31,6 @@ if ($result = mysqli_query($con, $sql_l)) {
     }
 }
 
-require_once ('functions.php');
 $lot_content = include_template ('lot.php', [
     'category_array' => $category_array,
     'lots_array' => $lots_array,
@@ -43,6 +42,8 @@ $layout_content = include_template ('layout.php', [
     'content' => $lot_content,
     'is_auth' => $is_auth,
     'category_array' => $category_array,
+    'username' => $sesUser['username'],
+    'profile_img' => $sesUser['profile_img'],
     'title' => 'Yeticave - Просмотр лота'
 ]);
 

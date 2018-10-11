@@ -19,24 +19,26 @@
                 <input type="search" name="search" placeholder="Поиск лота">
                 <input class="main-header__search-btn" type="submit" name="find" value="Найти">
             </form>
+            <?php if(isset($_SESSION['user'])): ?>
             <a class="main-header__add-lot button" href="../add.php">Добавить лот</a>
-
+            <?php endif; ?>
             <nav class="user-menu">
 
-                <?php if ($is_auth): ?>
+                <?php if (isset($username)): ?>
                     <div class="user-menu__image">
-                        <img src="img/user.jpg" width="40" height="40" alt="Пользователь">
+                        <img src="<?=$sesUser['profile_img'];?>" width="40" height="40" alt="Пользователь">
                     </div>
                     <div class="user-menu__logged">
-                        <p></p>
+                        <p><?=$username ?></p>
+                        <a href="logout.php">Выход</a>
                     </div>
                 <?php else: ?>
                     <ul class="user-menu__list">
                         <li class="user-menu__item">
-                            <a href="#">Регистрация</a>
+                            <a href="../sign-up.php">Регистрация</a>
                         </li>
                         <li class="user-menu__item">
-                            <a href="#">Вход</a>
+                            <a href="../login.php">Вход</a>
                         </li>
                     </ul>
                 <?php endif; ?>
@@ -54,7 +56,7 @@
             <!--заполните этот список из массива категорий-->
             <?php foreach ( $category_array as $value) { ?>
                 <li class="nav__item">
-                    <a href="pages/all-lots.html"> <?= $value['category_name']; ?> </a>
+                    <a href="all-lots.php"> <?= $value['category_name']; ?> </a>
 
                 </li>
                 <?php
