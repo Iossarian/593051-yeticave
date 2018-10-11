@@ -9,13 +9,13 @@
             ?>
     </ul>
     </nav>
-    <?php $classname = isset($errors) ? "--invalid" : ""; ?>
-    <form class="form container" action="../sign-up.php" method="post"> <!-- form--invalid -->
+
+    <form class="form container" action="../sign-up.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
       <h2>Регистрация нового аккаунта</h2>
         <?php $classname = isset($errors['email']) ? "form__item--invalid" : "";?>
       <div class="form__item <?=$classname;?>"> <!-- form__item--invalid -->
         <label for="email">E-mail*</label>
-        <input id="email" type="text" name="signup[email]" placeholder="Введите e-mail" value="<?=$values['email'] ?? ''; ?>" >
+        <input id="email" type="text" name="signup[email]" placeholder="Введите e-mail" value="<?=$values['email'] ?? ''; ?>" required>
         <span class="form__error">Введите e-mail</span>
       </div>
         <?php $classname = isset($errors['password']) ? "form__item--invalid" : "";?>
