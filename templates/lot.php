@@ -2,7 +2,7 @@
         <ul class="nav__list container">
             <?php foreach ($category_array as $value) { ?>
                 <li class="nav__item">
-                    <a href="pages/all-lots.html"> <?=$value['category_name']; ?> </a>
+                    <a href="all-lots.php"> <?=$value['category_name']; ?> </a>
                 </li>
                 <?php
             }
@@ -21,6 +21,7 @@
           <p class="lot-item__description"><?= htmlspecialchars($lot['description']); ?></p>
         </div>
         <div class="lot-item__right">
+            <?php if(isset($_SESSION['user'])): ?>
           <div class="lot-item__state">
             <div class="lot-item__timer timer">
                 <?php
@@ -47,6 +48,7 @@
               <button type="submit" class="button">Сделать ставку</button>
             </form>
           </div>
+            <?php endif; ?>
          <!-- <div class="history">
             <h3>История ставок (<span>?= $lot['MAX(bet.price)']?></span>)</h3>
             <table class="history__list">
