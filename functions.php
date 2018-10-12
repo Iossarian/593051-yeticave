@@ -83,6 +83,7 @@ function startTheSession() {
     if (!empty($_SESSION['user'])) {
         $sesUser['username'] = $_SESSION['user']['name'];
         $sesUser['profile_img'] = $_SESSION['user']['profile_img'];
+        $sesUser['user_id'] = $_SESSION['user']['id'];
     }
     else {
         $sesUser['username'] = $sesUser['profile_img'] = NULL;

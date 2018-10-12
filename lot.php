@@ -41,18 +41,22 @@ $bet_sql = 'SELECT bet.id,
             JOIN users ON bet.user_id = users.id
             WHERE bet.lot_id  =' .$id;
 
-
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $error =[];
-    $user_id = intval($_SESSION['user']['id']);
-    $lot_id = intval($bet_sql['ID']);
+    $user_id = mysqli_real_escape_string($con, $_SESSION['user']['id']);
+    $lot_id = $_GET['id'];
     $bet_cost = $_POST['cost'];
-    $sql = 'INSERT INTO bet (date, price, lot_id, user_id) VALUES (NOW(), ?, ?, ?)';
-    $stmt = db_get_prepare_stmt($con, $sql, [$bet_cost, $lot_id, $user_id]);
-    $res = mysqli_stmt_execute($stmt);
+    $sql = 'INSERT INTO bet (date, price, user_id, lot_id) VALUES (NOW(), ?, (SELECT id FROM users WHERE id = " '.$user_id.'"), ?)';
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_error($stmt);
+    mysqli_stmt_execute($stmt);
+    //$stmt = db_get_prepare_stmt($con, $sql, [$bet_cost, $user_id]);
+    //$res = mysqli_stmt_execute($stmt);
     //header("Location: lot.php?id=" . $id);
     var_dump($_POST);
+    var_dump($_GET);
+    var_dump($user_id);
+    var_dump($lot_id);
     exit();
 
 
