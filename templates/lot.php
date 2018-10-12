@@ -40,7 +40,7 @@
                 Мин. ставка <span><?=getMinBet($lot) . ' ₽'; ?></span>
               </div>
             </div>
-            <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
+            <form class="lot-item__form" action="../lot.php" method="post">
               <p class="lot-item__form-item">
                 <label for="cost">Ваша ставка</label>
                 <input id="cost" type="number" name="cost" placeholder="<?=getMinBet ($lot); ?>">
@@ -49,16 +49,20 @@
             </form>
           </div>
             <?php endif; ?>
-         <!-- <div class="history">
-            <h3>История ставок (<span>?= $lot['MAX(bet.price)']?></span>)</h3>
+          <div class="history">
+
+            <h3>История ставок (<span></span>)</h3>
             <table class="history__list">
+
               <tr class="history__item">
-                <td class="history__name" value="?=$lot['user_id']?>">?= $lot['name']?></td>
-                <td class="history__price">?=$bet['price']?></td>
+                <td class="history__name"></td>
+                <td class="history__price"></td>
                   <td class="history__time"></td></td>
               </tr>
+
             </table>
-          </div> -->
+
+          </div>
         </div>
       </div>
     </section>

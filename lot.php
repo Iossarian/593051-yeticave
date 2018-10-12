@@ -31,6 +31,34 @@ if ($result = mysqli_query($con, $sql_l)) {
     }
 }
 
+$bet_sql = 'SELECT bet.id,
+            bet.date,
+            bet.price,
+            bet.lot_id AS ID,
+            bet.user_id,
+            users.name AS user_name
+            FROM bet
+            JOIN users ON bet.user_id = users.id
+            WHERE bet.lot_id  =' .$id;
+
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $error =[];
+    $user_id = intval($_SESSION['user']['id']);
+    $lot_id = intval($bet_sql['ID']);
+    $bet_cost = $_POST['cost'];
+    $sql = 'INSERT INTO bet (date, price, lot_id, user_id) VALUES (NOW(), ?, ?, ?)';
+    $stmt = db_get_prepare_stmt($con, $sql, [$bet_cost, $lot_id, $user_id]);
+    $res = mysqli_stmt_execute($stmt);
+    //header("Location: lot.php?id=" . $id);
+    var_dump($_POST);
+    exit();
+
+
+}
+
+
 $lot_content = include_template ('lot.php', [
     'category_array' => $category_array,
     'lots_array' => $lots_array,

@@ -35,6 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $valid_errors[$key] ='Укажите положительное число';
         }
     }
+//Проверка даты на валидность
+    if (strtotime($_POST['end_time']) < time()) {
+        $valid_errors['end_time'] = 'Некорректная дата';
+    }
 //Проверка заполненности полей
     foreach ($required as $key) {
         if (empty($_POST[$key])) {

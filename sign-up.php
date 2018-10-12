@@ -12,6 +12,7 @@ $tpl_data = [];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $form = $_POST['signup'];
     $errors = [];
+    $allowed_img_types = ['image/png', 'image/jpeg'];
 
     $required = ['password', 'name', 'message'];
     $dict = [
@@ -32,6 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($form['email'])) {
         $errors['email'] = '- поле, необходимое к заполнению';
 
+    } elseif (!filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
+        $errors['email'] = 'должен быть корректен';
     } elseif (mysqli_num_rows($res) > 0) {
             $errors['email'] = 'уже занят. Пожалуйста, выберите другой.';
     } else {
@@ -41,19 +44,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $file_type = finfo_file($finfo, $tmp_name);
             $filename = 'img' . DIRECTORY_SEPARATOR . 'avatar' . DIRECTORY_SEPARATOR . uniqid()  . '.jpg';
             $_POST['profile_img'] = $filename;
-            if ($file_type !== "image/jpeg") {
-                $errors['profile_img'] = 'Загрузите картинку в формате JPEG';
+            if (!in_array($file_type, $allowed_img_types)) {
+                $errors['profile_img'] = 'Загрузите изображение в формате JPEG или PNG';
             } else {
                 move_uploaded_file($_FILES["signup"]['tmp_name']['profile_img'], __DIR__ . DIRECTORY_SEPARATOR . $filename);
             }
         }
         $password = password_hash($form['password'], PASSWORD_DEFAULT);
 
+
+    }
+    if (empty($errors)) {
         $sql = 'INSERT INTO users (reg_date, email, name, password, profile_img, contacts) VALUES (NOW(), ?, ?, ?, ?, ?)';
         $stmt = db_get_prepare_stmt($con, $sql, [$form['email'], $form['name'], $password, $_POST['profile_img'], $form['message']]);
         $res = mysqli_stmt_execute($stmt);
-    }
-    if ($res && empty($errors)) {
         header("location: /login.php");
         exit();
     }
