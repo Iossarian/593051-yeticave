@@ -51,7 +51,7 @@
           </label>
         </div>
       </div>
-        <?php if(isset($errors)): ?>
+        <?php if(!empty($errors)): ?>
             <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
             <ul>
                 <?php foreach($errors as $err => $val): ?>

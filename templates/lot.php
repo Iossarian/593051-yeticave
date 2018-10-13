@@ -21,7 +21,7 @@
           <p class="lot-item__description"><?= htmlspecialchars($lot['description']); ?></p>
         </div>
         <div class="lot-item__right">
-            <?php if(isset($_SESSION['user'])): ?>
+            <?php if(isset($_SESSION['user']) && $lot['author_id'] !== $_SESSION['user']['id']  && $lot['end_time'] <= time() && !$allowed): ?>
           <div class="lot-item__state">
             <div class="lot-item__timer timer">
                 <?php
@@ -37,28 +37,40 @@
                   <span class="lot-item__cost"></span><?= getCurPrice($lot);?></span>
               </div>
               <div class="lot-item__min-cost">
-                Мин. ставка <span><?=getMinBet($lot) . ' ₽'; ?></span>
-              </div>
+                    Мин. ставка <span><?=getMinBet($lot) . ' ₽'; ?></span>
+                </div>
             </div>
-            <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
-              <p class="lot-item__form-item">
+            <form class="lot-item__form" action="../lot.php?id=<?=$id;?>" method="post">
+                <?php $classname = isset($error['cost']) ? "--invalid" : "";?>
+              <p class="lot-item__form-item <?=$classname;?>">
                 <label for="cost">Ваша ставка</label>
-                <input id="cost" type="number" name="cost" placeholder="<?=getMinBet ($lot); ?>">
+                <input id="cost" type="number" name="cost" placeholder="<?=getMinBet ($lot); ?>" required>
               </p>
               <button type="submit" class="button">Сделать ставку</button>
             </form>
+              <?php if(!empty($error)): ?>
+                  <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
+                  <ul>
+                      <div style="color: red; font-size: 14px;"> <?=$error;?></div>
+                  </ul>
+              <?php endif; ?>
           </div>
             <?php endif; ?>
-         <!-- <div class="history">
-            <h3>История ставок (<span>?= $lot['MAX(bet.price)']?></span>)</h3>
+          <div class="history">
+              <?php if (isset($bet_query_array)):  ?>
+            <h3>История ставок (<span><?=count($bet_query_array);?></span>)</h3>
+              <?php endif; ?>
             <table class="history__list">
+                <?php foreach($bet_query_array as $key=>$val): ?>
               <tr class="history__item">
-                <td class="history__name" value="?=$lot['user_id']?>">?= $lot['name']?></td>
-                <td class="history__price">?=$bet['price']?></td>
-                  <td class="history__time"></td></td>
+                <td class="history__name"><?=$val['user_name'];?></td>
+                <td class="history__price"><?=$val['price'];?></td>
+                  <td class="history__time"><?php print(formatBetTime($val['date']));?></td></td>
               </tr>
+                <?php endforeach; ?>
             </table>
-          </div> -->
+
+          </div>
         </div>
       </div>
     </section>

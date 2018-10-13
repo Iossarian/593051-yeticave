@@ -9,7 +9,7 @@ $sql_result = mysqli_query($con, $sql);
 $category_array = mysqli_fetch_all($sql_result, MYSQLI_ASSOC);
 //Аутентификация
 if($_SERVER['REQUEST_METHOD'] =='POST') {
-    $form = $_POST;
+    $form = isset($_POST) ? $_POST : null;
     $required = ['email', 'password'];
     $errors = [];
     foreach ($required as $field) {
@@ -47,11 +47,10 @@ if($_SERVER['REQUEST_METHOD'] =='POST') {
 
 $content =  include_template('login.php', [
     'category_array' => $category_array,
-    'form' => $form,
-    'errors' => $errors
+    'errors' => $errors ?? []
 ]);
 $layout_content = include_template ('layout.php', [
-    '$title' => 'Вход в аккаунт',
+    'title' => 'Вход в аккаунт',
     'content' => $content,
     'username' => $sesUser['username'],
     'profile_img' => $sesUser['profile_img'],
