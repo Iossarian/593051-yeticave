@@ -47,9 +47,13 @@ if(!$bet_query_result) {
     die();}
 $bet_query_array=mysqli_fetch_all($bet_query_result, MYSQLI_ASSOC);
 $res = mysqli_query($con, $bet_sql);
-
-$allowed = true;
-
+//Проверка на наличие ставок от юзера
+$allowed = false;
+if (isset($_SESSION['user'])) {
+    if (allowedBet($id, $_SESSION['user']['id'])) {
+        $allowed = true;
+    }
+}
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $error =[];
     $user_id = $_SESSION['user']['id'];
@@ -87,6 +91,7 @@ $lot_content = include_template ('lot.php', [
     'lot' => $lot,
     'id' => $id,
     'error' => $error ?? [],
+    'allowed' => $allowed,
     'bet_query_array' => $bet_query_array,
 ]);
 $layout_content = include_template ('layout.php', [

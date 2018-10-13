@@ -21,7 +21,7 @@
           <p class="lot-item__description"><?= htmlspecialchars($lot['description']); ?></p>
         </div>
         <div class="lot-item__right">
-            <?php if(isset($_SESSION['user']) && $lot['author_id'] !== $_SESSION['user']['id']  && $lot['end_time'] <= time()): ?>
+            <?php if(isset($_SESSION['user']) && $lot['author_id'] !== $_SESSION['user']['id']  && $lot['end_time'] <= time() && !$allowed): ?>
           <div class="lot-item__state">
             <div class="lot-item__timer timer">
                 <?php

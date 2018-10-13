@@ -109,15 +109,16 @@ function formatBetTime($time) {
         return $minutes . ' м. назад';
     }
 }
-function allowedBet ($user_id, $id) {
-    $user_id = $_SESSION['user']['id']
-    $allowed_sql = 'SELECT user_id, lot_id FROM bet
-                WHERE user_id ="' . $user_id . '"
-                WHERE lod_id = "' . $id . '"';
-    $res = mysqli_query($con, $allowed_sql);
-    if (mysqli_num_rows($res) > 1) {
-        $allowed = false;
-    }
+
+function allowedBet($lot_id, $user_id) {
+    $con = mysqli_connect('localhost', 'root', '', 'yeticave');
+    $allowed_sql = 'SELECT `id` FROM `bet`
+                    WHERE `lot_id` = ?
+                    AND `user_id` = ?';
+    $stmt = db_get_prepare_stmt($con, $allowed_sql, [$lot_id, $user_id]);
+    $res = mysqli_stmt_execute($stmt);
+    mysqli_stmt_store_result($stmt);
+    return mysqli_stmt_num_rows($stmt);
 }
 
 error_reporting(E_ALL);
