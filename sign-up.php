@@ -55,11 +55,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     }
     if (empty($errors)) {
-        $sql = 'INSERT INTO users (reg_date, email, name, password, profile_img, contacts) VALUES (NOW(), ?, ?, ?, ?, ?)';
-        $stmt = db_get_prepare_stmt($con, $sql, [$form['email'], $form['name'], $password, $_POST['profile_img'], $form['message']]);
-        $res = mysqli_stmt_execute($stmt);
-        header("location: /login.php");
-        exit();
+        if (isset($_POST['profile_img'])) {
+            $sql = 'INSERT INTO users (reg_date, email, name, password, profile_img, contacts) VALUES (NOW(), ?, ?, ?, ?, ?)';
+            $stmt = db_get_prepare_stmt($con, $sql, [$form['email'], $form['name'], $password, $_POST['profile_img'], $form['message']]);
+            $res = mysqli_stmt_execute($stmt);
+            header("location: /login.php");
+            exit();
+        } else {
+            $sql = 'INSERT INTO users (reg_date, email, name, password, contacts) VALUES (NOW(), ?, ?, ?, ?)';
+            $stmt = db_get_prepare_stmt($con, $sql, [$form['email'], $form['name'], $password, $form['message']]);
+            $res = mysqli_stmt_execute($stmt);
+            header("location: /login.php");
+            exit();
+        }
     }
     $tpl_data['errors'] = $errors;
     $tpl_data['values'] = $form;
@@ -69,8 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $content =  include_template('sign-up.php', [
     'category_array' => $category_array,
-    'errors' => $errors,
-    'dict' => $dict,
+    'errors' => $errors ?? [],
+    'dict' => $dict ?? [],
     $tpl_data
 ]);
 $layout_content = include_template ('layout.php', [

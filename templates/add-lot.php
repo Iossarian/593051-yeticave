@@ -82,7 +82,7 @@
                     <span class="form__error">Введите дату завершения торгов</span>
                 </div>
             </div>
-                    <?php if (isset($valid_errors)): ?>
+                    <?php if (!empty($valid_errors)): ?>
             <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме:</span>
                 <ul>
                     <?php foreach($valid_errors as $err => $val): ?>

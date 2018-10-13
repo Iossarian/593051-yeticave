@@ -32,14 +32,11 @@ $sql = "SELECT lots.id, name, image, start_price, end_time, category_name FROM l
 
 
 $page_content = include_template('index.php', [
-    'goods_array' => $goods_array,
-    'format_time' => $format_time,
     'category_array' => $category_array,
     'lots_array' => $lots_array
 ]);
 $layout_content = include_template ('layout.php', [
     'content' => $page_content,
-    'is_auth' => $is_auth,
     'category_array' => $category_array,
     'username' => $sesUser['username'],
     'profile_img' => $sesUser['profile_img'],

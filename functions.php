@@ -1,4 +1,5 @@
 <?php
+require_once ('db.php');
 //Функция-шаблонизатор
 function include_template($name, $data) {
 $name = 'templates/' . $name;
@@ -68,7 +69,7 @@ function db_get_prepare_stmt(mysqli $con, string $sql , array $data = [])
     foreach ($data as $value) {
         $type = gettype($value);
         if (!isset($allowed_types[$type])) {
-            throw new \UnexpectedValueException(sprintf ('Unexpected parameter type "%s".', $type));
+            throw new \UnexpectedValueException(sprintf ('Unexpected parameter type "%s".', $type, var_dump($data)));
 
         }
         $types .= $allowed_types[$type];
@@ -91,5 +92,35 @@ function startTheSession() {
     return $sesUser;
 }
 
-?>
+function formatBetTime($time) {
+    $diff_sec = time() - strtotime($time);
+    $days = floor($diff_sec / 86400);
+    $hours = floor(($diff_sec % 86400) / 3600);
+    $minutes = floor(($diff_sec % 3600) / 60);
+    if ($days > 0) {
+        return $days . ' д. назад';
+    } elseif ($hours > 0) {
+        return $hours . ' ч. назад';
+    } elseif ($days > 0 && $hours > 0) {
+        return $days . ' д.' . $hours . ' ч. назад';
+    } elseif ($minutes <= 0) {
+        print ('Только что');
+    } else {
+        return $minutes . ' м. назад';
+    }
+}
+function allowedBet ($user_id, $id) {
+    $user_id = $_SESSION['user']['id']
+    $allowed_sql = 'SELECT user_id, lot_id FROM bet
+                WHERE user_id ="' . $user_id . '"
+                WHERE lod_id = "' . $id . '"';
+    $res = mysqli_query($con, $allowed_sql);
+    if (mysqli_num_rows($res) > 1) {
+        $allowed = false;
+    }
+}
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+?>

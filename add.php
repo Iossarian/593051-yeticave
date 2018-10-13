@@ -4,7 +4,6 @@ require_once ('functions.php');
 require_once ('db.php');
 require_once ('data.php');
 $sesUser = startTheSession();
-
 //Подключение категорий
 $sql = "SELECT category.id, category_name FROM category ";
 $sql_result = mysqli_query($con, $sql);
@@ -13,13 +12,15 @@ $category_array = mysqli_fetch_all($sql_result, MYSQLI_ASSOC);
 
 //Запрос на добавление лота
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $lot = $_POST['lot'];
+    $lot = isset($_POST['lot']) ? $_POST['lot'] : null;
+    $user_id = $_SESSION['user']['id'];
 //Валидация
     $required = ['name', 'category_id', 'description', 'start_price', 'bet_step', 'end_time' ];
     $dict = [
         'name' => 'Название лота',
         'category_id' => 'Категория лота',
         'description' => 'Описание лота',
+        'image' => 'Ошибка загрузки изображения: ',
         'start_price' => 'Стартовая цена лота',
         'bet_step' => 'Шаг ставки',
         'end_time' => 'Время завершения аукциона'
@@ -46,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 //Проверка файла
+    isset($valid_errors['image']) ? $valid_errors['image'] : null;
     if (!empty($_FILES['image']['name'])) {
         $tmp_name = $_FILES['image']['tmp_name'];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -63,12 +65,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
+
     if (count($valid_errors) > 0) {
 
     } else {
-        $sql_post = 'INSERT INTO lots (create_date, author_id, category_id, name, description, start_price, bet_step, end_time, image ) VALUES (NOW(), 5, ?, ?, ?, ?, ?, ?, ?)';
+        $sql_post = 'INSERT INTO lots (create_date, author_id, category_id, name, description, start_price, bet_step, end_time, image ) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)';
 
-        $stmt = db_get_prepare_stmt($con, $sql_post, [$_POST['category_id'], $_POST['name'], $_POST['description'], $_POST['start_price'], $_POST['bet_step'], $_POST['end_time'], $lot['image']]);
+        $stmt = db_get_prepare_stmt($con, $sql_post, [$user_id, $_POST['category_id'], $_POST['name'], $_POST['description'], $_POST['start_price'], $_POST['bet_step'], $_POST['end_time'], $lot['image']]);
         $res = mysqli_stmt_execute($stmt);
 
         if ($res) {
@@ -77,14 +80,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
+
 $addLot_content = include_template ('add-lot.php', [
-    'valid_errors' => $valid_errors,
-    'dict' => $dict,
+    'valid_errors' => $valid_errors ?? [],
+    'dict' => $dict ?? [],
     'category_array' => $category_array
 ]);
 $layout_content = include_template ('layout.php', [
     'content' => $addLot_content,
-    'is_auth' => $is_auth,
     'category_array' => $category_array,
     'username' => $sesUser['username'],
     'profile_img' => $sesUser['profile_img'],

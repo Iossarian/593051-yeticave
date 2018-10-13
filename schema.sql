@@ -66,7 +66,6 @@ CREATE TABLE `users` (
   `profile_img` char(120) DEFAULT NULL,
   `contacts` char(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 --
 -- Индексы сохранённых таблиц
 --
