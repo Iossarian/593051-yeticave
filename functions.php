@@ -121,7 +121,5 @@ function allowedBet($lot_id, $user_id) {
     return mysqli_stmt_num_rows($stmt);
 }
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 ?>
