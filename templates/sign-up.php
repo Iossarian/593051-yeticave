@@ -21,7 +21,7 @@
         <?php $classname = isset($errors['password']) ? "form__item--invalid" : "";?>
       <div class="form__item <?=$classname;?>">
         <label for="password">Пароль*</label>
-        <input id="password" type="text" name="signup[password]" placeholder="Введите пароль"  required>
+        <input id="password" type="password" name="signup[password]" placeholder="Введите пароль"  required>
         <span class="form__error">Введите пароль</span>
       </div>
         <?php $classname = isset($errors['name']) ? "form__item--invalid" : "";?>

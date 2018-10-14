@@ -2,7 +2,6 @@
 date_default_timezone_set("Europe/Moscow");
 require_once ('functions.php');
 require_once ('db.php');
-require_once ('data.php');
 $sesUser = startTheSession();
 //Подключение категорий
 $sql = "SELECT category.id, category_name FROM category ";
@@ -66,9 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
-    if (count($valid_errors) > 0) {
-
-    } else {
+    if (count($valid_errors) <= 0) {
         $sql_post = 'INSERT INTO lots (create_date, author_id, category_id, name, description, start_price, bet_step, end_time, image ) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)';
 
         $stmt = db_get_prepare_stmt($con, $sql_post, [$user_id, $_POST['category_id'], $_POST['name'], $_POST['description'], $_POST['start_price'], $_POST['bet_step'], $_POST['end_time'], $lot['image']]);
@@ -94,8 +91,6 @@ $layout_content = include_template ('layout.php', [
     'title' => 'Yeticave - Добавление лота'
 ]);
 echo $layout_content;
-
-
 ?>
 
 

@@ -21,7 +21,7 @@
           <p class="lot-item__description"><?= htmlspecialchars($lot['description']); ?></p>
         </div>
         <div class="lot-item__right">
-            <?php if(isset($_SESSION['user']) && $lot['author_id'] !== $_SESSION['user']['id']  && $lot['end_time'] <= time() && !$allowed): ?>
+
           <div class="lot-item__state">
             <div class="lot-item__timer timer">
                 <?php
@@ -40,6 +40,7 @@
                     Мин. ставка <span><?=getMinBet($lot) . ' ₽'; ?></span>
                 </div>
             </div>
+              <?php if(isset($_SESSION['user']) && $lot['author_id'] !== $_SESSION['user']['id']  && $lot['end_time'] <= time() && !$allowed): ?>
             <form class="lot-item__form" action="../lot.php?id=<?=$id;?>" method="post">
                 <?php $classname = isset($error['cost']) ? "--invalid" : "";?>
               <p class="lot-item__form-item <?=$classname;?>">
@@ -48,6 +49,7 @@
               </p>
               <button type="submit" class="button">Сделать ставку</button>
             </form>
+              <?php endif; ?>
               <?php if(!empty($error)): ?>
                   <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
                   <ul>
@@ -55,7 +57,7 @@
                   </ul>
               <?php endif; ?>
           </div>
-            <?php endif; ?>
+
           <div class="history">
               <?php if (isset($bet_query_array)):  ?>
             <h3>История ставок (<span><?=count($bet_query_array);?></span>)</h3>

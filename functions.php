@@ -1,5 +1,14 @@
 <?php
 require_once ('db.php');
+function dbConnect() {
+    $con = mysqli_connect('localhost', 'root', '', 'yeticave');
+    mysqli_set_charset($con, "utf8");
+    if ($con == false) {
+        print ("Ошибка подключения: " . mysqli_connect_error());
+        die();
+    }
+    return $con;
+}
 //Функция-шаблонизатор
 function include_template($name, $data) {
 $name = 'templates/' . $name;
@@ -111,7 +120,7 @@ function formatBetTime($time) {
 }
 
 function allowedBet($lot_id, $user_id) {
-    $con = mysqli_connect('localhost', 'root', '', 'yeticave');
+    $con = dbConnect();
     $allowed_sql = 'SELECT `id` FROM `bet`
                     WHERE `lot_id` = ?
                     AND `user_id` = ?';
@@ -121,5 +130,6 @@ function allowedBet($lot_id, $user_id) {
     return mysqli_stmt_num_rows($stmt);
 }
 
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 ?>

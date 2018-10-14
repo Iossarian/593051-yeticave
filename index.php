@@ -2,7 +2,6 @@
 date_default_timezone_set("Europe/Moscow");
 require_once ('db.php');
 require_once ('functions.php');
-require_once ('data.php');
 $sesUser = startTheSession();
 
 //Подключение категорий
@@ -17,7 +16,7 @@ $sql_lots = "SELECT lots.id, name, image, start_price, end_time, category_name F
 $sql_lots_result = mysqli_query($con, $sql_lots);
 $lots_array = mysqli_fetch_all($sql_lots_result, MYSQLI_ASSOC);
 
-$cur_page = $_GET['page'] ?? 1;
+$cur_page = (int)($_GET['page'] ?? 1);
 $page_items = 6;
 
 $result = mysqli_query($con, "SELECT COUNT(*) as cnt FROM lots");
