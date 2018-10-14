@@ -49,7 +49,7 @@ $res = mysqli_query($con, $bet_sql);
 //Проверка на наличие ставок от юзера
 $allowed = false;
 if (isset($_SESSION['user'])) {
-    if (allowedBet($id, $_SESSION['user']['id'])) {
+    if (allowedBet($con, $id, $_SESSION['user']['id'])) {
         $allowed = true;
     }
 }
