@@ -1,7 +1,6 @@
 <?php
 require_once ('db.php');
 require_once ('functions.php');
-require_once ('data.php');
 $sesUser = startTheSession();
 //Подключение категорий
 $sql = "SELECT id, category_name FROM category";

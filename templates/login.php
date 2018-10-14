@@ -24,7 +24,7 @@
         $value = isset($form['password']) ? $form['password'] : ""; ?>
       <div class="form__item form__item--last <?=$classname;?>">
         <label for="password">Пароль*</label>
-        <input id="password" type="text" name="password" placeholder="Введите пароль" required>
+        <input id="password" type="password" name="password" placeholder="Введите пароль" required>
         <span class="form__error"><?=$errors['password'];?></span>
       </div>
       <button type="submit" class="button">Войти</button>
