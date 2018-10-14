@@ -1,14 +1,6 @@
 <?php
 require_once ('db.php');
-function dbConnect() {
-    $con = mysqli_connect('localhost', 'root', '', 'yeticave');
-    mysqli_set_charset($con, "utf8");
-    if ($con == false) {
-        print ("Ошибка подключения: " . mysqli_connect_error());
-        die();
-    }
-    return $con;
-}
+
 //Функция-шаблонизатор
 function include_template($name, $data) {
 $name = 'templates/' . $name;
@@ -37,17 +29,21 @@ function formatThePrice ($price) {
 //Получаем текущую стоимость
 function getCurPrice ($lot) {
     if (isset($lot['MAX(bet.price)'])) {
-        echo $lot['MAX(bet.price)'] . ' ₽';
+        $format_ceil = ceil($lot['MAX(bet.price)']);
+        return number_format($format_ceil, 0, '.', ' ') . ' ₽';
     } else {
-    echo $lot['start_price'] . ' ₽';
+        $format_price = ceil($lot['start_price']);
+        return number_format($format_price, 0, '.', ' ') . ' ₽';
     }
 }
 //Получаем минимальную ставку
 function getMinBet ($lot) {
     if (isset($lot['MAX(bet.price)'])) {
-        echo ($lot['bet_step']) + ($lot['MAX(bet.price)']);
+        $price = ($lot['bet_step']) + ($lot['MAX(bet.price)']);
+        return number_format($price, 0, '.', ' ');
     } else {
-        echo ($lot['start_price']) + ($lot['bet_step']);
+       $price = ($lot['start_price']) + ($lot['bet_step']);
+       return number_format($price, 0, '.', ' ');
     }
 }
 //Функция-обработчик
@@ -119,13 +115,12 @@ function formatBetTime($time) {
     }
 }
 
-function allowedBet($lot_id, $user_id) {
-    $con = dbConnect();
+function allowedBet($con, $lot_id, $user_id) {
     $allowed_sql = 'SELECT `id` FROM `bet`
                     WHERE `lot_id` = ?
                     AND `user_id` = ?';
     $stmt = db_get_prepare_stmt($con, $allowed_sql, [$lot_id, $user_id]);
-    $res = mysqli_stmt_execute($stmt);
+    mysqli_stmt_execute($stmt);
     mysqli_stmt_store_result($stmt);
     return mysqli_stmt_num_rows($stmt);
 }

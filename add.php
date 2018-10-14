@@ -13,6 +13,7 @@ $category_array = mysqli_fetch_all($sql_result, MYSQLI_ASSOC);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lot = isset($_POST['lot']) ? $_POST['lot'] : null;
     $user_id = $_SESSION['user']['id'];
+    $allowed_img_types = ['image/png', 'image/jpeg'];
 //Валидация
     $required = ['name', 'category_id', 'description', 'start_price', 'bet_step', 'end_time' ];
     $dict = [
@@ -30,13 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
  //Проверка стоимости
     foreach($price_fields as $key) {
-        $i = $_POST[$key];
+        $i = $_POST[$key] ?? null;
         if (!is_numeric($i) || $i < $min_price) {
             $valid_errors[$key] ='Укажите положительное число';
         }
     }
 //Проверка даты на валидность
-    if (strtotime($_POST['end_time']) < time()) {
+    if (strtotime($_POST['end_time'] ?? null) < time()) {
         $valid_errors['end_time'] = 'Некорректная дата';
     }
 //Проверка заполненности полей
@@ -53,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $file_type = finfo_file($finfo, $tmp_name);
         $filename = 'img' . DIRECTORY_SEPARATOR . uniqid() . '.jpg';
         $lot['image'] = $filename;
-        if ($file_type !== "image/jpeg") {
+        if (!in_array($file_type, $allowed_img_types)) {
             $valid_errors['image'] = 'Загрузите картинку в формате JPEG';
         } else {
             move_uploaded_file($_FILES['image']['tmp_name'], __DIR__ . DIRECTORY_SEPARATOR . $filename);

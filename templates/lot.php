@@ -66,7 +66,7 @@
                 <?php foreach($bet_query_array as $key=>$val): ?>
               <tr class="history__item">
                 <td class="history__name"><?=$val['user_name'];?></td>
-                <td class="history__price"><?=$val['price'];?></td>
+                <td class="history__price"><?=formatThePrice($val['price']);?></td>
                   <td class="history__time"><?php print(formatBetTime($val['date']));?></td></td>
               </tr>
                 <?php endforeach; ?>
