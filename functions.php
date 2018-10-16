@@ -1,23 +1,29 @@
 <?php
 require_once ('db.php');
 
-//Функция-шаблонизатор
-function include_template($name, $data) {
-$name = 'templates/' . $name;
-$result = '';
-
-if (!file_exists($name)) {
-return $result;
+/**
+ * //Функция-шаблонизатор
+ * @param $name
+ * @param $data
+ * @return false|string
+ */
+ function include_template($name, $data) {
+    $name = 'templates/' . $name;
+    $result = '';
+    if (!file_exists($name)) {
+        return $result;
+    }
+    ob_start();
+    extract($data);
+    require_once $name;
+    $result = ob_get_clean();
+    return $result;
 }
-
-ob_start();
-extract($data);
-require_once $name;
-
-$result = ob_get_clean();
-return $result;
-}
-//Функция форматирования цены лота
+/**
+ * //Функция форматирования цены лота
+ * @param $price
+ * @return string
+ */
 function formatThePrice ($price) {
     if ($price < 1000 ) {
         return ceil($price) . ' ₽';
@@ -26,7 +32,11 @@ function formatThePrice ($price) {
         return number_format($format_price, 0, '.', ' ') . ' ₽';
     }
 }
-//Получаем текущую стоимость
+/**
+ * //Получаем текущую стоимость
+ * @param $lot
+ * @return string
+ */
 function getCurPrice ($lot) {
     if (isset($lot['MAX(bet.price)'])) {
         $format_ceil = ceil($lot['MAX(bet.price)']);
@@ -36,7 +46,11 @@ function getCurPrice ($lot) {
         return number_format($format_price, 0, '.', ' ') . ' ₽';
     }
 }
-//Получаем минимальную ставку
+/**
+ * //Получаем минимальную ставку
+ * @param $lot
+ * @return string
+ */
 function getMinBet ($lot) {
     if (isset($lot['MAX(bet.price)'])) {
         $price = ($lot['bet_step']) + ($lot['MAX(bet.price)']);
@@ -46,7 +60,6 @@ function getMinBet ($lot) {
        return number_format($price, 0, '.', ' ');
     }
 }
-//Функция-обработчик
 /**
  * Создает подготовленное выражение на основе готового SQL запроса и переданных данных.
  *
@@ -83,6 +96,11 @@ function db_get_prepare_stmt(mysqli $con, string $sql , array $data = [])
     mysqli_stmt_bind_param($stmt, $types, ...$stmt_data);
     return $stmt;
 }
+
+/**
+ * //Создание сессии
+ * @return array
+ */
 function startTheSession() {
     session_start();
     $sesUser = [];
@@ -97,6 +115,11 @@ function startTheSession() {
     return $sesUser;
 }
 
+/**
+ * //Форматирование времени лота
+ * @param $time
+ * @return string
+ */
 function formatBetTime($time) {
     $diff_sec = time() - strtotime($time);
     $days = floor($diff_sec / 86400);
@@ -115,6 +138,13 @@ function formatBetTime($time) {
     }
 }
 
+/**
+ * //Валидация добавления ставки
+ * @param $con
+ * @param $lot_id
+ * @param $user_id
+ * @return int
+ */
 function allowedBet($con, $lot_id, $user_id) {
     $allowed_sql = 'SELECT `id` FROM `bet`
                     WHERE `lot_id` = ?
