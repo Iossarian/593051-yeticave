@@ -66,7 +66,6 @@ CREATE TABLE `users` (
   `profile_img` char(120) DEFAULT NULL,
   `contacts` char(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 --
 -- Индексы сохранённых таблиц
 --
@@ -143,3 +142,5 @@ ALTER TABLE `lots`
   ADD CONSTRAINT `author_key` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
   ADD CONSTRAINT `winner_key` FOREIGN KEY (`winner_id`) REFERENCES `users` (`id`);
+  
+  CREATE FULLTEXT INDEX lots_search ON lots(name, description)

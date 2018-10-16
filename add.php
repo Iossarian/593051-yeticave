@@ -2,9 +2,7 @@
 date_default_timezone_set("Europe/Moscow");
 require_once ('functions.php');
 require_once ('db.php');
-require_once ('data.php');
 $sesUser = startTheSession();
-
 //Подключение категорий
 $sql = "SELECT category.id, category_name FROM category ";
 $sql_result = mysqli_query($con, $sql);
@@ -13,13 +11,16 @@ $category_array = mysqli_fetch_all($sql_result, MYSQLI_ASSOC);
 
 //Запрос на добавление лота
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $lot = $_POST['lot'];
+    $lot = isset($_POST['lot']) ? $_POST['lot'] : null;
+    $user_id = $_SESSION['user']['id'];
+    $allowed_img_types = ['image/png', 'image/jpeg'];
 //Валидация
     $required = ['name', 'category_id', 'description', 'start_price', 'bet_step', 'end_time' ];
     $dict = [
         'name' => 'Название лота',
         'category_id' => 'Категория лота',
         'description' => 'Описание лота',
+        'image' => 'Ошибка загрузки изображения: ',
         'start_price' => 'Стартовая цена лота',
         'bet_step' => 'Шаг ставки',
         'end_time' => 'Время завершения аукциона'
@@ -30,10 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
  //Проверка стоимости
     foreach($price_fields as $key) {
-        $i = $_POST[$key];
+        $i = $_POST[$key] ?? null;
         if (!is_numeric($i) || $i < $min_price) {
             $valid_errors[$key] ='Укажите положительное число';
         }
+    }
+//Проверка даты на валидность
+    if (strtotime($_POST['end_time'] ?? null) < time()) {
+        $valid_errors['end_time'] = 'Некорректная дата';
     }
 //Проверка заполненности полей
     foreach ($required as $key) {
@@ -42,13 +47,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 //Проверка файла
+    isset($valid_errors['image']) ? $valid_errors['image'] : null;
     if (!empty($_FILES['image']['name'])) {
         $tmp_name = $_FILES['image']['tmp_name'];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $file_type = finfo_file($finfo, $tmp_name);
         $filename = 'img' . DIRECTORY_SEPARATOR . uniqid() . '.jpg';
         $lot['image'] = $filename;
-        if ($file_type !== "image/jpeg") {
+        if (!in_array($file_type, $allowed_img_types)) {
             $valid_errors['image'] = 'Загрузите картинку в формате JPEG';
         } else {
             move_uploaded_file($_FILES['image']['tmp_name'], __DIR__ . DIRECTORY_SEPARATOR . $filename);
@@ -59,12 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
-    if (count($valid_errors) > 0) {
 
-    } else {
-        $sql_post = 'INSERT INTO lots (create_date, author_id, category_id, name, description, start_price, bet_step, end_time, image ) VALUES (NOW(), 5, ?, ?, ?, ?, ?, ?, ?)';
+    if (count($valid_errors) <= 0) {
+        $sql_post = 'INSERT INTO lots (create_date, author_id, category_id, name, description, start_price, bet_step, end_time, image ) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)';
 
-        $stmt = db_get_prepare_stmt($con, $sql_post, [$_POST['category_id'], $_POST['name'], $_POST['description'], $_POST['start_price'], $_POST['bet_step'], $_POST['end_time'], $lot['image']]);
+        $stmt = db_get_prepare_stmt($con, $sql_post, [$user_id, $_POST['category_id'], $_POST['name'], $_POST['description'], $_POST['start_price'], $_POST['bet_step'], $_POST['end_time'], $lot['image']]);
         $res = mysqli_stmt_execute($stmt);
 
         if ($res) {
@@ -73,22 +78,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
+
 $addLot_content = include_template ('add-lot.php', [
-    'valid_errors' => $valid_errors,
-    'dict' => $dict,
+    'valid_errors' => $valid_errors ?? [],
+    'dict' => $dict ?? [],
     'category_array' => $category_array
 ]);
 $layout_content = include_template ('layout.php', [
     'content' => $addLot_content,
-    'is_auth' => $is_auth,
     'category_array' => $category_array,
     'username' => $sesUser['username'],
     'profile_img' => $sesUser['profile_img'],
     'title' => 'Yeticave - Добавление лота'
 ]);
 echo $layout_content;
-
-
 ?>
 
 
