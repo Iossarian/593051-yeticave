@@ -9,7 +9,6 @@ $sesUser = startTheSession();
 $sql = "SELECT id, category_name FROM category";
 $sql_result = mysqli_query($con, $sql);
 $category_array = mysqli_fetch_all($sql_result, MYSQLI_ASSOC);
-
 //Подключение лотов
 $sql_lots = "SELECT lots.id, name, image, start_price, end_time, category_name FROM lots
             JOIN category ON category.id = lots.category_id
