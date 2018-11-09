@@ -7,8 +7,6 @@ $sesUser = startTheSession();
 $sql = "SELECT category.id, category_name FROM category ";
 $sql_result = mysqli_query($con, $sql);
 $category_array = mysqli_fetch_all($sql_result, MYSQLI_ASSOC);
-
-
 //Запрос на добавление лота
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lot = isset($_POST['lot']) ? $_POST['lot'] : null;

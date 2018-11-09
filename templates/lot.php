@@ -1,16 +1,15 @@
 <nav class="nav">
-        <ul class="nav__list container">
-            <?php foreach ($category_array as $value) { ?>
-                <li class="nav__item">
-                    <a href="all-lots.php"> <?=$value['category_name']; ?> </a>
-                </li>
-                <?php
-            }
-            ?>
-        </ul>
-    </nav>
+    <ul class="nav__list container">
+        <?php foreach ($category_array as $value) { ?>
+            <li class="nav__item">
+                <a href="all-lots.php?category=<?=$value['id'];?>"> <?=$value['category_name']; ?> </a>
+            </li>
+            <?php
+        }
+        ?>
+    </ul>
+</nav>
     <section class="lot-item container">
-        <!--<php foreach ($lots_array as $value) { ?> -->
       <h2><?= htmlspecialchars($lot['name']); ?></h2>
       <div class="lot-item__content">
         <div class="lot-item__left">

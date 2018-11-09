@@ -91,7 +91,7 @@ $lot_content = include_template ('lot.php', [
     'id' => $id,
     'error' => $error ?? [],
     'allowed' => $allowed,
-    'bet_query_array' => $bet_query_array,
+    'bet_query_array' => $bet_query_array
 ]);
 $layout_content = include_template ('layout.php', [
     'content' => $lot_content,
